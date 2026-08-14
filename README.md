@@ -29,5 +29,9 @@ to treat their own checks as advisory.
 
 ## Status
 
-The vocabulary is in use but has not been declared stable. Terms may still be
-added, and the `w3id.org` redirects are `302` until they are.
+**Experimental — do not build on this yet.** The garden vocabulary is a working
+draft: terms may be renamed or removed outright, not merely added, and the
+model is still moving.
+
+The `w3id.org` identifiers are permanent; the documents behind them are not.
+Redirects stay `302` until the vocabulary is declared stable.
