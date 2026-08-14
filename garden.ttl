@@ -238,6 +238,11 @@ garden:contrastsWith a rdf:Property ;
     rdfs:label   "contrasts with"@en ;
     rdfs:comment "The two are learned against each other. Symmetric in meaning, so the writer stores the direction whose source IRI sorts lower."@en .
 
+garden:corresponds a rdf:Property ;
+    rdfs:subPropertyOf skos:related ;
+    rdfs:label   "corresponds to"@en ;
+    rdfs:comment "The two are the same structure seen in two settings, so that a step on one side has a step on the other. Not a prerequisite and not a generalisation: neither end explains the other, they run in parallel. Symmetric in meaning, so the writer stores the direction whose source IRI sorts lower."@en .
+
 #################################################################
 # Routes
 #################################################################

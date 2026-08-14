@@ -157,8 +157,8 @@ shapes:LinkShape a sh:NodeShape ;
 
 shapes:RelationShape a sh:NodeShape ;
     sh:targetObjectsOf garden:relation ;
-    sh:in ( garden:prerequisiteFor garden:generalizes garden:contrastsWith ) ;
-    sh:message "A link relation is one of the three subproperties of skos:related the contract defines." .
+    sh:in ( garden:prerequisiteFor garden:generalizes garden:contrastsWith garden:corresponds ) ;
+    sh:message "A link relation is one of the four subproperties of skos:related the contract defines." .
 
 #################################################################
 # Route and stops
