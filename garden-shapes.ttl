@@ -113,6 +113,12 @@ shapes:LinkShape a sh:NodeShape ;
     sh:property [
         sh:path garden:from ; sh:disjoint garden:to ;
         sh:message "A link must connect two different concepts." ] ;
+    sh:property [
+        sh:path schema:description ; sh:nodeKind sh:Literal ; sh:uniqueLang true ;
+        sh:message "A passage is described in prose, at most once per language." ] ;
+    sh:property [
+        sh:path garden:inscription ; sh:nodeKind sh:Literal ; sh:uniqueLang true ;
+        sh:message "A passage carries at most one inscription per language." ] ;
     # The rule is written against links, not against skos:related. Associations
     # exist only as link resources, so no skos:related triple is ever
     # materialised and a check against it would pass forever without checking.

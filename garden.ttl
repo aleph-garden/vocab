@@ -157,6 +157,9 @@ garden:form a rdf:Property ;
 # are chosen once and kept, because a locus that changes appearance stops being
 # the locus that was learnt. Prose is schema:description, so that a reader who
 # knows nothing of this vocabulary still finds it.
+#
+# They apply to a link as much as to a placement. A connection you walk through
+# is somewhere you stand, and a passage nobody can picture is not a passage.
 
 garden:inscription a rdf:Property ;
     rdfs:label   "inscription"@en ;
