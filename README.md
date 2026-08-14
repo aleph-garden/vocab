@@ -35,3 +35,21 @@ model is still moving.
 
 The `w3id.org` identifiers are permanent; the documents behind them are not.
 Redirects stay `302` until the vocabulary is declared stable.
+
+## Licence
+
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Each vocabulary also
+carries its licence and creator as `dcterms:` triples, so the terms travel with
+the document rather than with this repository.
+
+Referencing the terms — writing `garden:PlaceCard` into your own graph — is not
+redistribution and needs no attribution. Attribution applies when you share the
+vocabulary itself: copying a document, deriving another vocabulary from it, or
+publishing it onward. In that case name the title, the author, a link to the
+source, and the licence:
+
+> "Aleph Garden vocabulary" by Christopher Mühl,
+> <https://w3id.org/aleph/garden>, licensed under
+> [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+State it too if you changed anything.

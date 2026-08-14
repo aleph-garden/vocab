@@ -6,6 +6,7 @@
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix schema: <https://schema.org/> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 
 # Conformance test shipped alongside the vocabulary, so that anyone federating
 # later checks against the same shapes without being sent anything.
@@ -23,6 +24,8 @@
 <https://w3id.org/aleph/garden/shapes>
     rdfs:label   "Aleph Garden shapes"@en ;
     rdfs:comment "SHACL conditions for the Aleph Garden vocabulary."@en ;
+    dcterms:creator "Christopher Mühl" ;
+    dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
     rdfs:seeAlso <https://w3id.org/aleph/garden#> .
 
 #################################################################

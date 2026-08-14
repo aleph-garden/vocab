@@ -5,6 +5,7 @@
 @prefix schema: <https://schema.org/> .
 @prefix prov:   <http://www.w3.org/ns/prov#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 
 # The Aleph Garden vocabulary: places, connections, routes, presentation, and
 # the review scheduler that turns generated terrain into usable loci.
@@ -21,6 +22,8 @@
 <https://w3id.org/aleph/garden#>
     rdfs:label   "Aleph Garden vocabulary"@en ;
     rdfs:comment "Terms for placing concepts in a walkable garden, connecting them, routing through them, and scheduling their review."@en ;
+    dcterms:creator "Christopher Mühl" ;
+    dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
     rdfs:seeAlso <https://w3id.org/aleph/garden/shapes> .
 
 #################################################################
