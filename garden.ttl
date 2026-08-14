@@ -153,6 +153,16 @@ garden:form a rdf:Property ;
     rdfs:comment "The catalogue entry this place is drawn as. A form carries the binding to its rendering as a URL, so the renderer holds no table of special cases."@en ;
     rdfs:range   skos:Concept .
 
+# A form says what kind of thing a place is; these two say which one it is. Both
+# are chosen once and kept, because a locus that changes appearance stops being
+# the locus that was learnt. Prose is schema:description, so that a reader who
+# knows nothing of this vocabulary still finds it.
+
+garden:inscription a rdf:Property ;
+    rdfs:label   "inscription"@en ;
+    rdfs:comment "The text read off the place itself: a spine, a plaque, a word cut into a stone. Not the concept's label — an inscription is chosen for recall and may say what the concept never says."@en ;
+    rdfs:range   rdfs:Literal .
+
 #################################################################
 # Layout strategies
 #################################################################

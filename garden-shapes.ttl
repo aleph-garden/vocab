@@ -45,6 +45,12 @@ shapes:PlacementShape a sh:NodeShape ;
         sh:path garden:form ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
     sh:property [
         sh:path garden:layout ; sh:maxCount 1 ] ;
+    sh:property [
+        sh:path schema:description ; sh:nodeKind sh:Literal ; sh:uniqueLang true ;
+        sh:message "A place is described in prose, at most once per language." ] ;
+    sh:property [
+        sh:path garden:inscription ; sh:nodeKind sh:Literal ; sh:uniqueLang true ;
+        sh:message "A place carries at most one inscription per language." ] ;
     sh:xone (
         [ sh:property [ sh:path garden:parent ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
           sh:property [ sh:path garden:world  ; sh:maxCount 0 ] ]
