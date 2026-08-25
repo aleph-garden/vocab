@@ -1,5 +1,5 @@
-@prefix shapes: <https://w3id.org/aleph/garden/shapes#> .
-@prefix garden: <https://w3id.org/aleph/garden#> .
+@prefix shapes: <https://w3id.org/aleph/ns/garden/shapes#> .
+@prefix garden: <https://w3id.org/aleph/ns/garden#> .
 @prefix sh:     <http://www.w3.org/ns/shacl#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
@@ -21,12 +21,12 @@
 # because SHACL reads the class hierarchy from the data graph and a written
 # document is not obliged to carry the vocabulary with it.
 
-<https://w3id.org/aleph/garden/shapes>
+<https://w3id.org/aleph/ns/garden/shapes>
     rdfs:label   "Aleph Garden shapes"@en ;
     rdfs:comment "SHACL conditions for the Aleph Garden vocabulary."@en ;
     dcterms:creator <https://toph.so/profile#me> ;
     dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
-    rdfs:seeAlso <https://w3id.org/aleph/garden#> .
+    rdfs:seeAlso <https://w3id.org/aleph/ns/garden#> .
 
 #################################################################
 # Placement
@@ -144,8 +144,8 @@ shapes:LinkShape a sh:NodeShape ;
         sh:message "Hierarchy and association are disjoint in SKOS: two concepts already connected through broader/narrower must not also carry a link. Things sharing a room get no wormhole to each other." ;
         sh:select """
             SELECT $this ?value WHERE {
-              $this <https://w3id.org/aleph/garden#from> ?a ;
-                    <https://w3id.org/aleph/garden#to>   ?b .
+              $this <https://w3id.org/aleph/ns/garden#from> ?a ;
+                    <https://w3id.org/aleph/ns/garden#to>   ?b .
               {
                 ?a ( <http://www.w3.org/2004/02/skos/core#broader> | <http://www.w3.org/2004/02/skos/core#broaderTransitive> | ^<http://www.w3.org/2004/02/skos/core#narrower> | ^<http://www.w3.org/2004/02/skos/core#narrowerTransitive> )+ ?b .
               } UNION {
@@ -201,12 +201,12 @@ shapes:RouteOrdinalGapShape a sh:NodeShape ;
         sh:message "Route stop ordinals run without gaps from 1. New stops get max + 1; inserting between is not provided for." ;
         sh:select """
             SELECT $this ?value WHERE {
-              $this <https://w3id.org/aleph/garden#stop> ?stop .
-              ?stop <https://w3id.org/aleph/garden#ordinal> ?value .
+              $this <https://w3id.org/aleph/ns/garden#stop> ?stop .
+              ?stop <https://w3id.org/aleph/ns/garden#ordinal> ?value .
               FILTER( ?value > 1 )
               FILTER NOT EXISTS {
-                $this <https://w3id.org/aleph/garden#stop> ?prev .
-                ?prev <https://w3id.org/aleph/garden#ordinal> ?prevOrdinal .
+                $this <https://w3id.org/aleph/ns/garden#stop> ?prev .
+                ?prev <https://w3id.org/aleph/ns/garden#ordinal> ?prevOrdinal .
                 FILTER( ?prevOrdinal = ?value - 1 )
               }
             }
@@ -219,10 +219,10 @@ shapes:RouteOrdinalStartShape a sh:NodeShape ;
         sh:message "Route stop ordinals start at 1." ;
         sh:select """
             SELECT $this ?value WHERE {
-              $this <https://w3id.org/aleph/garden#stop> ?value .
+              $this <https://w3id.org/aleph/ns/garden#stop> ?value .
               FILTER NOT EXISTS {
-                $this <https://w3id.org/aleph/garden#stop> ?first .
-                ?first <https://w3id.org/aleph/garden#ordinal> 1 .
+                $this <https://w3id.org/aleph/ns/garden#stop> ?first .
+                ?first <https://w3id.org/aleph/ns/garden#ordinal> 1 .
               }
             }
         """ ] .

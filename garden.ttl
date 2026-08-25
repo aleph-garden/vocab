@@ -1,4 +1,4 @@
-@prefix garden: <https://w3id.org/aleph/garden#> .
+@prefix garden: <https://w3id.org/aleph/ns/garden#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
@@ -16,15 +16,15 @@
 # statement rather than an identity statement.
 #
 # Identity is an IRI, implementation is a URL. Terms are minted under
-# https://w3id.org/aleph/garden# and never under the application's own domain,
+# https://w3id.org/aleph/ns/garden# and never under the application's own domain,
 # so an implementation may move and an identity may not.
 
-<https://w3id.org/aleph/garden#>
+<https://w3id.org/aleph/ns/garden#>
     rdfs:label   "Aleph Garden vocabulary"@en ;
     rdfs:comment "Terms for placing concepts in a walkable garden, connecting them, routing through them, and scheduling their review."@en ;
     dcterms:creator <https://toph.so/profile#me> ;
     dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
-    rdfs:seeAlso <https://w3id.org/aleph/garden/shapes> .
+    rdfs:seeAlso <https://w3id.org/aleph/ns/garden/shapes> .
 
 #################################################################
 # Classes
@@ -454,49 +454,49 @@ garden:enumerations a skos:ConceptScheme ;
 garden:forms a skos:Collection ;
     rdfs:label "Form catalogue"@en ;
     rdfs:comment "Deliberately minimal in phase 0. Every entry carries the binding to its rendering as a URL."@en ;
-    skos:member <https://w3id.org/aleph/garden/form/book>,
-                <https://w3id.org/aleph/garden/form/table>,
-                <https://w3id.org/aleph/garden/form/drawer>,
-                <https://w3id.org/aleph/garden/form/cabinet>,
-                <https://w3id.org/aleph/garden/form/lantern>,
-                <https://w3id.org/aleph/garden/form/gate>,
-                <https://w3id.org/aleph/garden/form/stone> .
+    skos:member <https://w3id.org/aleph/ns/garden/form/book>,
+                <https://w3id.org/aleph/ns/garden/form/table>,
+                <https://w3id.org/aleph/ns/garden/form/drawer>,
+                <https://w3id.org/aleph/ns/garden/form/cabinet>,
+                <https://w3id.org/aleph/ns/garden/form/lantern>,
+                <https://w3id.org/aleph/ns/garden/form/gate>,
+                <https://w3id.org/aleph/ns/garden/form/stone> .
 
-<https://w3id.org/aleph/garden/form/book> a skos:Concept ;
+<https://w3id.org/aleph/ns/garden/form/book> a skos:Concept ;
     skos:inScheme garden:enumerations ; schema:name "Book"@en ;
     garden:implementation <https://aph.gdn/forms/book.js> .
 
-<https://w3id.org/aleph/garden/form/table> a skos:Concept ;
+<https://w3id.org/aleph/ns/garden/form/table> a skos:Concept ;
     skos:inScheme garden:enumerations ; schema:name "Table"@en ;
     garden:implementation <https://aph.gdn/forms/table.js> .
 
-<https://w3id.org/aleph/garden/form/drawer> a skos:Concept ;
+<https://w3id.org/aleph/ns/garden/form/drawer> a skos:Concept ;
     skos:inScheme garden:enumerations ; schema:name "Drawer"@en ;
     garden:implementation <https://aph.gdn/forms/drawer.js> .
 
-<https://w3id.org/aleph/garden/form/cabinet> a skos:Concept ;
+<https://w3id.org/aleph/ns/garden/form/cabinet> a skos:Concept ;
     skos:inScheme garden:enumerations ; schema:name "Cabinet"@en ;
     garden:implementation <https://aph.gdn/forms/cabinet.js> .
 
-<https://w3id.org/aleph/garden/form/lantern> a skos:Concept ;
+<https://w3id.org/aleph/ns/garden/form/lantern> a skos:Concept ;
     skos:inScheme garden:enumerations ; schema:name "Lantern"@en ;
     garden:implementation <https://aph.gdn/forms/lantern.js> .
 
-<https://w3id.org/aleph/garden/form/gate> a skos:Concept ;
+<https://w3id.org/aleph/ns/garden/form/gate> a skos:Concept ;
     skos:inScheme garden:enumerations ; schema:name "Gate"@en ;
     garden:implementation <https://aph.gdn/forms/gate.js> .
 
-<https://w3id.org/aleph/garden/form/stone> a skos:Concept ;
+<https://w3id.org/aleph/ns/garden/form/stone> a skos:Concept ;
     skos:inScheme garden:enumerations ; schema:name "Stone"@en ;
     garden:implementation <https://aph.gdn/forms/stone.js> .
 
 garden:layoutStrategies a skos:Collection ;
     rdfs:label "Layout strategies"@en ;
-    skos:member <https://w3id.org/aleph/garden/layout/gosper>,
-                <https://w3id.org/aleph/garden/layout/grid>,
-                <https://w3id.org/aleph/garden/layout/square> .
+    skos:member <https://w3id.org/aleph/ns/garden/layout/gosper>,
+                <https://w3id.org/aleph/ns/garden/layout/grid>,
+                <https://w3id.org/aleph/ns/garden/layout/square> .
 
-<https://w3id.org/aleph/garden/layout/gosper> a skos:Concept, garden:LayoutStrategy ;
+<https://w3id.org/aleph/ns/garden/layout/gosper> a skos:Concept, garden:LayoutStrategy ;
     skos:inScheme garden:enumerations ; schema:name "Gosper curve"@en ;
     rdfs:comment "A plane-filling curve. Adjacency along the curve is adjacency in the plane, so it supplies the world's canonical ordering and preserves locality for free."@en ;
     garden:implementation <https://aph.gdn/layouts/gosper.js> ;
@@ -504,7 +504,7 @@ garden:layoutStrategies a skos:Collection ;
     garden:appendStable  true ;
     garden:sourced       false .
 
-<https://w3id.org/aleph/garden/layout/grid> a skos:Concept, garden:LayoutStrategy ;
+<https://w3id.org/aleph/ns/garden/layout/grid> a skos:Concept, garden:LayoutStrategy ;
     skos:inScheme garden:enumerations ; schema:name "Grid"@en ;
     rdfs:comment "Fixed column count, so index i keeps its cell however many siblings arrive."@en ;
     garden:implementation <https://aph.gdn/layouts/grid.js> ;
@@ -512,7 +512,7 @@ garden:layoutStrategies a skos:Collection ;
     garden:appendStable  true ;
     garden:sourced       false .
 
-<https://w3id.org/aleph/garden/layout/square> a skos:Concept, garden:LayoutStrategy ;
+<https://w3id.org/aleph/ns/garden/layout/square> a skos:Concept, garden:LayoutStrategy ;
     skos:inScheme garden:enumerations ; schema:name "Square grid"@en ;
     rdfs:comment "Rewraps to stay square, so the column count follows the total count. Admissible, but moving a place onto it relocates every child at once and is priced accordingly."@en ;
     garden:implementation <https://aph.gdn/layouts/square.js> ;
