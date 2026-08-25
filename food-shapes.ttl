@@ -1,0 +1,273 @@
+@prefix shapes:  <https://w3id.org/aleph/ns/food/shapes#> .
+@prefix food:    <https://w3id.org/aleph/ns/food#> .
+@prefix sh:      <http://www.w3.org/ns/shacl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema:  <https://schema.org/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix unit:    <http://qudt.org/vocab/unit/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# Conformance test shipped alongside the vocabulary, so that anyone federating
+# later checks against the same shapes without being sent anything.
+#
+# What is NOT here, on purpose: that a range's lower bound does not exceed its
+# upper one. SHACL compares two properties of the same node only through a
+# SPARQL constraint, so the writer enforces it. And no conversion is checked at
+# all — a shape sees one amount, never two, and cannot know whether adding them
+# was legitimate.
+
+<https://w3id.org/aleph/ns/food/shapes>
+    rdfs:label   "Aleph Garden food shapes"@en ;
+    rdfs:comment "SHACL conditions for the Aleph Garden food vocabulary."@en ;
+    dcterms:creator <https://toph.so/profile#me> ;
+    dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
+    rdfs:seeAlso <https://w3id.org/aleph/ns/food#> .
+
+# Mengenangaben für Rezepte, Bestand und Einkaufsliste.
+#
+# Beschreibungseinheit: eine Mengenangabe an genau einer Stelle — eine
+# Rezeptzeile, eine Charge im Schrank, ein Wunsch auf der Liste. Die Menge ist
+# ein eigener Knoten, weil sie vier Gestalten hat, wird aber nicht unabhängig
+# adressiert: sie gehört der Zeile, an der sie hängt.
+#
+# Die vier Gestalten sind ausdrücklich getypt statt aus der Form erraten. Wer
+# die Daten liest, muss sofort sehen, ob hier gerechnet werden darf.
+#
+#   MeasuredQuantity     200 ml, 500 g      Betrag + QUDT-Einheit, umrechenbar
+#   CountedQuantity      3 Eier             Betrag + unit:NUM, zählbar, nicht wägbar
+#   HandQuantity         1 Prise, 1 Stange  Betrag + schema:unitText, keine Einheit
+#   UnspecifiedQuantity  „etwas"            gar kein Betrag — und das ist Absicht
+#
+# Ein Betrag ist genau („250") oder ein Bereich („1–2"). Beides zugleich ist
+# verboten, sonst gilt keins verlässlich.
+#
+# Umrechnung ist nur innerhalb eines qudt:hasQuantityKind zulässig. ml→g braucht
+# die Dichte des Stoffs, die in diesen Daten nirgends steht; wer sie trotzdem
+# rechnet, erfindet eine Zahl.
+#
+# Die Betrags-Regeln stehen in jeder Gestalt ausgeschrieben statt einmal über
+# sh:node geteilt. Grund: sh:node meldet im Verstoßfall nur
+# sh:NodeConstraintComponent und verschweigt, welche Regel gebrochen wurde — für
+# ein Schreib-Gate ist das der Unterschied zwischen „Menge ist falsch" und „der
+# Wert ist eine Zeichenkette".
+#
+# Nicht geprüft: dass minValue ≤ maxValue. SHACL vergleicht zwei Eigenschaften
+# ohne SPARQL-Constraint nicht — das gehört in den Schreib-Gate.
+#
+# Nicht abgedeckt: Nährwerte, Preise, Haltbarkeit, und jede Umrechnung über
+# Quantity Kinds hinweg.
+
+food:IngredientRequirementShape
+  a sh:NodeShape ;
+  sh:targetClass food:IngredientRequirement ;
+  sh:name "Zutat mit Menge" ;
+  sh:property [
+    sh:path food:substance ;
+    sh:name "Stoff" ;
+    sh:description "Der Stoff, nicht das Produkt. Verweis, nie Text — sonst nimmt eine Zeichenkette still den Platz eines Links ein." ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:order 1 ;
+  ] ;
+  sh:property [
+    sh:path food:quantity ;
+    sh:name "Menge" ;
+    sh:description "Genau eine, in einer der vier Gestalten." ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:order 2 ;
+    # Die vier Gestalten hier aufzuzählen ist nicht nur Prüfung: ohne diese Liste
+    # weiß ein Formulargenerator nicht, was an dieser Kante hängen darf, und
+    # rendert statt der Mengenangabe ein leeres Textfeld.
+    sh:or (
+      [ sh:node food:MeasuredQuantityShape ]
+      [ sh:node food:CountedQuantityShape ]
+      [ sh:node food:HandQuantityShape ]
+      [ sh:node food:UnspecifiedQuantityShape ]
+    ) ;
+  ] .
+
+# --- Gemessen ------------------------------------------------------------
+# Die einzige Gestalt, in der gerechnet werden darf. Die Einheit ist eine
+# QUDT-IRI, weil dort qudt:conversionMultiplier (Faktor zur SI-Basis),
+# qudt:hasQuantityKind (die Schranke gegen ml→g) und qudt:symbol dranhängen.
+food:MeasuredQuantityShape
+  a sh:NodeShape ;
+  sh:targetClass food:MeasuredQuantity ;
+  sh:name "Gemessene Menge" ;
+  sh:property [
+    sh:path schema:value ; sh:name "Wert" ;
+    sh:description "Genauer Betrag. Wer einen Bereich meint, lässt dies leer und füllt Von/Bis." ;
+    sh:datatype xsd:decimal ; sh:pattern "^[0-9]+(\\.[0-9]+)?$" ;
+    sh:maxCount 1 ; sh:order 1 ;
+  ] ;
+  sh:property [
+    sh:path schema:minValue ; sh:name "Von" ;
+    sh:description "Untere Grenze — nur zusammen mit „Bis“, und dann ohne festen Wert." ;
+    sh:datatype xsd:decimal ; sh:pattern "^[0-9]+(\\.[0-9]+)?$" ;
+    sh:maxCount 1 ; sh:order 2 ;
+  ] ;
+  sh:property [
+    sh:path schema:maxValue ; sh:name "Bis" ;
+    sh:description "Obere Grenze — nur zusammen mit „Von“." ;
+    sh:datatype xsd:decimal ; sh:pattern "^[0-9]+(\\.[0-9]+)?$" ;
+    sh:maxCount 1 ; sh:order 3 ;
+  ] ;
+  sh:xone (
+    [ sh:property [ sh:path schema:value    ; sh:minCount 1 ] ;
+      sh:property [ sh:path schema:minValue ; sh:maxCount 0 ] ;
+      sh:property [ sh:path schema:maxValue ; sh:maxCount 0 ] ]
+    [ sh:property [ sh:path schema:value    ; sh:maxCount 0 ] ;
+      sh:property [ sh:path schema:minValue ; sh:minCount 1 ] ;
+      sh:property [ sh:path schema:maxValue ; sh:minCount 1 ] ]
+  ) ;
+  sh:property [
+    sh:path schema:unitCode ;
+    sh:name "Einheit" ;
+    sh:description "QUDT-Einheit als IRI, etwa http://qudt.org/vocab/unit/GM." ;
+    sh:nodeKind sh:IRI ;
+    sh:pattern "^http://qudt\\.org/vocab/unit/" ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:order 4 ;
+  ] ;
+  sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) .
+
+# --- Gezählt -------------------------------------------------------------
+# „3 Eier". Die Zahl stimmt, aber ohne Stückgewicht führt kein Weg nach Gramm.
+# Eigene Gestalt und nicht MeasuredQuantity mit unit:NUM, damit beim Lesen
+# auffällt, dass hier eine Dimension fehlt.
+food:CountedQuantityShape
+  a sh:NodeShape ;
+  sh:targetClass food:CountedQuantity ;
+  sh:name "Gezählte Menge" ;
+  sh:property [
+    sh:path schema:value ; sh:name "Anzahl" ;
+    sh:description "Wie viele Stück." ;
+    sh:datatype xsd:decimal ; sh:pattern "^[0-9]+(\\.[0-9]+)?$" ;
+    sh:maxCount 1 ; sh:order 1 ;
+  ] ;
+  sh:property [
+    sh:path schema:minValue ; sh:name "Von" ;
+    sh:description "Untere Grenze — nur zusammen mit „Bis“, und dann ohne festen Wert." ;
+    sh:datatype xsd:decimal ; sh:pattern "^[0-9]+(\\.[0-9]+)?$" ;
+    sh:maxCount 1 ; sh:order 2 ;
+  ] ;
+  sh:property [
+    sh:path schema:maxValue ; sh:name "Bis" ;
+    sh:description "Obere Grenze — nur zusammen mit „Von“." ;
+    sh:datatype xsd:decimal ; sh:pattern "^[0-9]+(\\.[0-9]+)?$" ;
+    sh:maxCount 1 ; sh:order 3 ;
+  ] ;
+  sh:xone (
+    [ sh:property [ sh:path schema:value    ; sh:minCount 1 ] ;
+      sh:property [ sh:path schema:minValue ; sh:maxCount 0 ] ;
+      sh:property [ sh:path schema:maxValue ; sh:maxCount 0 ] ]
+    [ sh:property [ sh:path schema:value    ; sh:maxCount 0 ] ;
+      sh:property [ sh:path schema:minValue ; sh:minCount 1 ] ;
+      sh:property [ sh:path schema:maxValue ; sh:minCount 1 ] ]
+  ) ;
+  sh:property [
+    sh:path schema:unitCode ;
+    sh:name "Einheit" ;
+    sh:description "Immer unit:NUM — gezählt wird in Stück." ;
+    sh:hasValue unit:NUM ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:order 4 ;
+  ] ;
+  sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) .
+
+# --- Handmaß -------------------------------------------------------------
+# „1 Prise", „1 Stange", „1 Bund". Keine Einheiten, sondern Handmaße und
+# produktspezifische Portionen. QUDT führt sie zu Recht nicht — unit:PINCH gibt
+# es nicht —, und eine zu erfinden würde Erfundenes als Standard tarnen.
+#
+# Der Platz dafür ist schema:unitText, ausdrücklich gedacht für den Fall, dass
+# kein Einheiten-Code passt. Ein eigener Begriff wäre hier überflüssig gewesen.
+#
+# Warum hier gar kein schema:unitCode steht, obwohl QUDT zwei Platzhalter hätte:
+#
+#   unit:UNITLESS  meint dimensionslos im physikalischen Sinn — Verhältnisse und
+#                  Koeffizienten, 135 quantityKinds hängen dran. Eine Prise ist
+#                  nicht dimensionslos, sondern eine unbestimmte Masse. Und mit
+#                  conversionMultiplier 1.0 wäre sie umrechenbar.
+#   unit:UNKNOWN   trifft die Absicht besser (quantitykind:Unknown), trägt aber
+#                  conversionMultiplier 0.0. Jeder Rechner, der Wert mal
+#                  Multiplikator nimmt, macht daraus 0 g.
+#
+# Beide würden außerdem nicht sagen, WELCHES Handmaß gemeint ist — unitText
+# bräuchte es trotzdem. Ein Code, der nichts trägt außer Risiko, bleibt weg.
+#
+# Der Klartext ist sprachmarkiert: mehrere Sprachen erlaubt, je Sprache eine.
+# Ohne Marke bliebe „1 Stange" auch auf Französisch deutsch.
+food:HandQuantityShape
+  a sh:NodeShape ;
+  sh:targetClass food:HandQuantity ;
+  sh:name "Handmaß" ;
+  sh:property [
+    sh:path schema:value ; sh:name "Anzahl" ;
+    sh:description "Auch keine ist erlaubt: „etwas Salz“ hat keine, „1 Prise“ schon." ;
+    sh:datatype xsd:decimal ; sh:pattern "^[0-9]+(\\.[0-9]+)?$" ;
+    sh:maxCount 1 ; sh:order 1 ;
+  ] ;
+  sh:property [
+    sh:path schema:minValue ; sh:name "Von" ;
+    sh:description "Untere Grenze — nur zusammen mit „Bis“, und dann ohne festen Wert." ;
+    sh:datatype xsd:decimal ; sh:pattern "^[0-9]+(\\.[0-9]+)?$" ;
+    sh:maxCount 1 ; sh:order 2 ;
+  ] ;
+  sh:property [
+    sh:path schema:maxValue ; sh:name "Bis" ;
+    sh:description "Obere Grenze — nur zusammen mit „Von“." ;
+    sh:datatype xsd:decimal ; sh:pattern "^[0-9]+(\\.[0-9]+)?$" ;
+    sh:maxCount 1 ; sh:order 3 ;
+  ] ;
+  sh:xone (
+    [ sh:property [ sh:path schema:value    ; sh:minCount 1 ] ;
+      sh:property [ sh:path schema:minValue ; sh:maxCount 0 ] ;
+      sh:property [ sh:path schema:maxValue ; sh:maxCount 0 ] ]
+    [ sh:property [ sh:path schema:value    ; sh:maxCount 0 ] ;
+      sh:property [ sh:path schema:minValue ; sh:minCount 1 ] ;
+      sh:property [ sh:path schema:maxValue ; sh:minCount 1 ] ]
+    [ sh:property [ sh:path schema:value    ; sh:maxCount 0 ] ;
+      sh:property [ sh:path schema:minValue ; sh:maxCount 0 ] ;
+      sh:property [ sh:path schema:maxValue ; sh:maxCount 0 ] ]
+  ) ;
+  sh:property [
+    sh:path schema:unitText ;
+    sh:name "Handmaß" ;
+    sh:description "Prise, Stange, Bund — mit Sprachmarke, je Sprache eine." ;
+    sh:datatype rdf:langString ;
+    sh:pattern "^\\S(.*\\S)?$" ;
+    sh:minLength 1 ;
+    sh:uniqueLang true ;
+    sh:minCount 1 ;
+    sh:order 4 ;
+  ] ;
+  sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) .
+
+# --- Unbestimmt ----------------------------------------------------------
+# „etwas Butter". Ein vollwertiger Zustand, kein fehlender Wert: die Zeile
+# existiert, die Menge steht bewusst nicht fest. Muss vom Weglassen der ganzen
+# Mengenangabe unterscheidbar bleiben.
+food:UnspecifiedQuantityShape
+  a sh:NodeShape ;
+  sh:targetClass food:UnspecifiedQuantity ;
+  sh:name "Menge unbestimmt" ;
+  sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) ;
+  sh:property [
+    sh:path skos:note ;
+    sh:name "Anmerkung" ;
+    sh:description "Warum die Menge offen bleibt, etwa „nach Pfanne“." ;
+    sh:datatype rdf:langString ;
+    sh:pattern "^\\S(.*\\S)?$" ;
+    sh:uniqueLang true ;
+    sh:maxCount 3 ;
+    sh:order 1 ;
+  ] .

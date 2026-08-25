@@ -1,0 +1,63 @@
+@prefix lens:    <https://w3id.org/aleph/ns/lens#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema:  <https://schema.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# The Aleph Garden lens vocabulary: which view is offered for a subgraph, and
+# what draws it.
+#
+# A lens does not describe a resource, it describes a way of looking at several.
+# That is the line against SHACL: a shape says what may be written about one
+# node, a lens says which predicates carry the structure across many. Where a
+# view is a form or a card over a single node, a shape already answers it and no
+# lens is needed.
+#
+# RDFS carries the taxonomy, SHACL carries the conditions. There is deliberately
+# no OWL here, matching the rest of this repository: open-world semantics
+# describes, it does not constrain.
+#
+# Identity is an IRI, implementation is a URL. Terms are minted under
+# https://w3id.org/aleph/ns/lens# and never under the application's own domain,
+# so an implementation may move and an identity may not.
+
+<https://w3id.org/aleph/ns/lens#>
+    rdfs:label   "Aleph Garden lens vocabulary"@en ;
+    rdfs:comment "Terms for binding a topology to the predicates that carry it and to the component that draws it."@en ;
+    dcterms:creator <https://toph.so/profile#me> ;
+    dcterms:license <http://creativecommons.org/licenses/by/4.0/> .
+
+#################################################################
+# Classes
+#################################################################
+
+lens:SemanticLens a rdfs:Class ;
+    rdfs:subClassOf schema:Intangible ;
+    rdfs:label   "Semantic lens"@en ;
+    rdfs:comment "Binds a topology to the predicates that stand in for its edges and to the renderer that draws it. Lenses are open: many may exist over one topology, and the same subgraph may be offered through several at once, which is why choosing between them is a separate act from applying one."@en .
+
+lens:Renderer a rdfs:Class ;
+    rdfs:subClassOf schema:Intangible ;
+    rdfs:label   "Renderer"@en ;
+    rdfs:comment "A component that draws a subgraph according to a lens, identified by IRI and implemented at a URL. Delivered as an ES module defining a custom element; the framework inside the element is the author's concern and no part of this contract."@en .
+
+#################################################################
+# Properties
+#################################################################
+
+lens:renderer a rdf:Property ;
+    rdfs:label   "renderer"@en ;
+    rdfs:comment "The renderer that implements this lens."@en ;
+    rdfs:range   lens:Renderer .
+
+lens:matchesShape a rdf:Property ;
+    rdfs:label   "matches shape"@en ;
+    rdfs:comment "The topology this lens applies to — forest, DAG, bipartite, hub-and-spoke. A topology is a claim about the arrangement of a subgraph, not about the fields of one resource."@en .
+
+lens:edgePredicates a rdf:Property ;
+    rdfs:label   "edge predicates"@en ;
+    rdfs:comment "The predicates read as edges when this lens is applied. Required ones: a subgraph missing any of them is not a match, so the lens does not claim a structure the data does not carry."@en .
+
+lens:optionalEdgePredicates a rdf:Property ;
+    rdfs:label   "optional edge predicates"@en ;
+    rdfs:comment "Predicates read as edges when present. Their absence weakens the drawing but does not disqualify the match."@en .
