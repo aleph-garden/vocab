@@ -24,7 +24,7 @@
 <https://w3id.org/aleph/garden/shapes>
     rdfs:label   "Aleph Garden shapes"@en ;
     rdfs:comment "SHACL conditions for the Aleph Garden vocabulary."@en ;
-    dcterms:creator "Christopher Mühl" ;
+    dcterms:creator <https://toph.so/profile#me> ;
     dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
     rdfs:seeAlso <https://w3id.org/aleph/garden#> .
 

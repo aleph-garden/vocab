@@ -22,7 +22,7 @@
 <https://w3id.org/aleph/garden#>
     rdfs:label   "Aleph Garden vocabulary"@en ;
     rdfs:comment "Terms for placing concepts in a walkable garden, connecting them, routing through them, and scheduling their review."@en ;
-    dcterms:creator "Christopher Mühl" ;
+    dcterms:creator <https://toph.so/profile#me> ;
     dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
     rdfs:seeAlso <https://w3id.org/aleph/garden/shapes> .
 
