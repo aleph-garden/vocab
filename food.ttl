@@ -2,6 +2,7 @@
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema:  <https://schema.org/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
 # The Aleph Garden food vocabulary: how much of what.
@@ -76,3 +77,46 @@ food:substance a rdf:Property ;
 food:quantity a rdf:Property ;
     rdfs:label   "quantity"@en ;
     rdfs:comment "How much, in one of the four shapes. Leaving it out is an error rather than a way of saying the amount is open; that is what an unspecified quantity is for."@en .
+
+#################################################################
+# Handmaße und offene Mengen als Begriffe
+#################################################################
+
+# A word that has to agree with a number and a language is a rendering, not a
+# value. "Prise" is wrong beside 140 and "Prisen" is wrong beside 1, and a
+# singular-plural pair only holds for languages that have exactly two forms.
+# So the measure is a term carrying its own forms, and the data holds the term.
+
+food:HandMeasure a rdfs:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label   "Hand measure"@en ;
+    rdfs:comment "A portion named in words — a pinch, a stalk, a bunch. Countable, which is what separates it from an open amount: a number fits in front of it."@en .
+
+food:OpenAmount a rdfs:Class ;
+    rdfs:subClassOf skos:Concept ;
+    rdfs:label   "Open amount"@en ;
+    rdfs:comment "A recognised way of leaving the amount to the cook — to taste, as needed. No number fits in front of it, which is why it carries no forms per count."@en .
+
+food:handMeasures a skos:ConceptScheme ;
+    rdfs:label "Hand measures"@en .
+
+food:openAmounts a skos:ConceptScheme ;
+    rdfs:label "Open amounts"@en .
+
+food:handMeasure a rdf:Property ;
+    rdfs:label   "hand measure"@en ;
+    rdfs:comment "The measure a hand quantity is counted in. A reference rather than a word, so the word can follow both the language and the number."@en ;
+    rdfs:range   food:HandMeasure .
+
+food:openAmount a rdf:Property ;
+    rdfs:label   "open amount"@en ;
+    rdfs:comment "How an unspecified quantity is left open. Says which recognised way it is, where the note beside it says why."@en ;
+    rdfs:range   food:OpenAmount .
+
+food:countForm a rdf:Property ;
+    rdfs:label   "count form"@en ;
+    rdfs:comment "One written form of a measure, tied to the plural category it is chosen for. At least one; which one applies is decided when the amount is shown, never when it is written."@en .
+
+food:pluralCategory a rdf:Property ;
+    rdfs:label   "plural category"@en ;
+    rdfs:comment "A CLDR plural category — zero, one, two, few, many, other. Not a grammatical number: Polish \"few\" covers 2 to 4 and 22 to 24, which is a selection rule rather than a number, so lexinfo's singular and plural do not fit."@en .

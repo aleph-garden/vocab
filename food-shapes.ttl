@@ -239,16 +239,31 @@ food:HandQuantityShape
       sh:property [ sh:path schema:maxValue ; sh:maxCount 0 ] ]
   ) ;
   sh:property [
-    sh:path schema:unitText ;
+    sh:path food:handMeasure ;
     sh:name "Handmaß" ;
-    sh:description "Prise, Stange, Bund — mit Sprachmarke, je Sprache eine." ;
+    sh:description "Verweis auf ein bekanntes Handmaß. Trägt seine Wortformen selbst, also steht hier kein Wort." ;
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1 ;
+    sh:order 4 ;
+  ] ;
+  sh:property [
+    sh:path schema:unitText ;
+    sh:name "Handmaß, ausgeschrieben" ;
+    sh:description "Für ein Maß, das die Liste nicht führt. Steht dann so da, wie es getippt wurde — mitsamt der Zahl, die dazu passen muss." ;
     sh:datatype rdf:langString ;
     sh:pattern "^\\S(.*\\S)?$" ;
     sh:minLength 1 ;
     sh:uniqueLang true ;
-    sh:minCount 1 ;
-    sh:order 4 ;
+    sh:order 5 ;
   ] ;
+  # Eines von beiden, nicht beides: zwei Angaben desselben Maßes können sich
+  # widersprechen, und dann gilt keine.
+  sh:xone (
+    [ sh:property [ sh:path food:handMeasure ; sh:minCount 1 ] ;
+      sh:property [ sh:path schema:unitText  ; sh:maxCount 0 ] ]
+    [ sh:property [ sh:path food:handMeasure ; sh:maxCount 0 ] ;
+      sh:property [ sh:path schema:unitText  ; sh:minCount 1 ] ]
+  ) ;
   sh:closed true ;
   sh:ignoredProperties ( rdf:type ) .
 
@@ -263,12 +278,115 @@ food:UnspecifiedQuantityShape
   sh:closed true ;
   sh:ignoredProperties ( rdf:type ) ;
   sh:property [
+    sh:path food:openAmount ;
+    sh:name "So bleibt es offen" ;
+    sh:description "Verweis auf eine bekannte Art, die Menge offen zu lassen — „nach Geschmack“, „nach Bedarf“. Übersetzt sich dadurch mit." ;
+    sh:nodeKind sh:IRI ;
+    sh:maxCount 1 ;
+    sh:order 1 ;
+  ] ;
+  sh:property [
     sh:path skos:note ;
     sh:name "Anmerkung" ;
-    sh:description "Warum die Menge offen bleibt, etwa „nach Pfanne“." ;
+    sh:description "Die einmalige Bemerkung daneben, etwa „nach Pfanne“. Kein Ersatz für die Angabe darüber." ;
     sh:datatype rdf:langString ;
     sh:pattern "^\\S(.*\\S)?$" ;
     sh:uniqueLang true ;
     sh:maxCount 3 ;
+    sh:order 2 ;
+  ] .
+
+# --- Handmaße als Begriffe ------------------------------------------------
+# Ein Handmaß trägt seine Wortformen selbst, damit weder die Sprache noch die
+# Zahl daneben im Datensatz festgeschrieben wird: „140 Prise" ist falsches
+# Deutsch, „Prisen" wäre für 1 falsch, und beides gilt nur für Sprachen mit
+# genau zwei Formen.
+#
+# Die Fächer sind CLDRs Auswahlkategorien, nicht grammatikalische Numeri.
+# lexinfo führt singular/dual/trial/paucal/plural — das ist etwas anderes:
+# polnisch „few" deckt 2–4 und 22–24 ab und ist eine Auswahlregel, kein Numerus.
+# Deshalb CLDRs eigene Namen, und weil die Liste geschlossen ist, steht sie hier
+# als sh:in statt als Muster.
+
+food:HandMeasureShape
+  a sh:NodeShape ;
+  sh:targetClass food:HandMeasure ;
+  sh:name "Handmaß" ;
+  sh:property [
+    sh:path skos:inScheme ;
+    sh:name "Liste" ;
+    sh:hasValue food:handMeasures ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ; sh:maxCount 1 ;
     sh:order 1 ;
+  ] ;
+  sh:property [
+    sh:path skos:prefLabel ;
+    sh:name "Name" ;
+    sh:description "Die Nennform, wie sie in einer Auswahl steht — nicht die Form, die neben einer Zahl erscheint." ;
+    sh:datatype rdf:langString ;
+    sh:pattern "^\\S(.*\\S)?$" ;
+    sh:uniqueLang true ;
+    sh:minCount 1 ;
+    sh:order 2 ;
+  ] ;
+  sh:property [
+    sh:path food:countForm ;
+    sh:name "Wortform je Fach" ;
+    sh:description "Mindestens eine. Welche gilt, entscheidet die Zahl beim Anzeigen, nicht der Schreibende." ;
+    sh:nodeKind sh:BlankNodeOrIRI ;
+    sh:minCount 1 ;
+    sh:order 3 ;
+  ] .
+
+food:CountFormShape
+  a sh:NodeShape ;
+  sh:targetObjectsOf food:countForm ;
+  sh:name "Wortform" ;
+  sh:property [
+    sh:path food:pluralCategory ;
+    sh:name "Fach" ;
+    sh:description "Eine CLDR-Auswahlkategorie. Welche eine Sprache überhaupt kennt, sagt CLDR — Japanisch nur „other“, Arabisch alle sechs." ;
+    sh:datatype xsd:string ;
+    sh:in ( "zero" "one" "two" "few" "many" "other" ) ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:order 1 ;
+  ] ;
+  sh:property [
+    sh:path skos:prefLabel ;
+    sh:name "Wort" ;
+    sh:datatype rdf:langString ;
+    sh:pattern "^\\S(.*\\S)?$" ;
+    sh:uniqueLang true ;
+    sh:minCount 1 ;
+    sh:order 2 ;
+  ] ;
+  sh:closed true ;
+  sh:ignoredProperties ( rdf:type ) .
+
+# --- Arten, die Menge offen zu lassen -------------------------------------
+# Kein Fach je Zahl: neben „nach Geschmack" steht keine Zahl, an die sich ein
+# Wort anpassen müsste. Das ist genau der Unterschied zum Handmaß — vor ein
+# Handmaß passt eine Zahl, vor eine offene Menge nicht.
+
+food:OpenAmountShape
+  a sh:NodeShape ;
+  sh:targetClass food:OpenAmount ;
+  sh:name "Offene Menge" ;
+  sh:property [
+    sh:path skos:inScheme ;
+    sh:name "Liste" ;
+    sh:hasValue food:openAmounts ;
+    sh:nodeKind sh:IRI ;
+    sh:minCount 1 ; sh:maxCount 1 ;
+    sh:order 1 ;
+  ] ;
+  sh:property [
+    sh:path skos:prefLabel ;
+    sh:name "Name" ;
+    sh:datatype rdf:langString ;
+    sh:pattern "^\\S(.*\\S)?$" ;
+    sh:uniqueLang true ;
+    sh:minCount 1 ;
+    sh:order 2 ;
   ] .
