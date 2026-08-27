@@ -78,14 +78,15 @@ food:IngredientRequirementShape
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:minCount 1 ; sh:maxCount 1 ;
     sh:order 2 ;
-    # Die vier Gestalten hier aufzuzählen ist nicht nur Prüfung: ohne diese Liste
-    # weiß ein Formulargenerator nicht, was an dieser Kante hängen darf, und
-    # rendert statt der Mengenangabe ein leeres Textfeld.
+    # Listing the four here is not only a check: without it a form generator has
+    # nothing to descend into and renders an empty text field instead of the
+    # amount. And each branch is named, because the generator turns them into the
+    # choice itself — unnamed, the reader picks between four shape IRIs.
     sh:or (
-      [ sh:node food:MeasuredQuantityShape ]
-      [ sh:node food:CountedQuantityShape ]
-      [ sh:node food:HandQuantityShape ]
-      [ sh:node food:UnspecifiedQuantityShape ]
+      [ sh:node food:MeasuredQuantityShape    ; sh:name "Gemessen"@de,   "Measured"@en ]
+      [ sh:node food:CountedQuantityShape     ; sh:name "Gezählt"@de,    "Counted"@en ]
+      [ sh:node food:HandQuantityShape        ; sh:name "Handmaß"@de,    "Hand measure"@en ]
+      [ sh:node food:UnspecifiedQuantityShape ; sh:name "Unbestimmt"@de, "Unspecified"@en ]
     ) ;
   ] .
 
