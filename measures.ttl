@@ -1,0 +1,202 @@
+@prefix measures: <https://w3id.org/aleph/ns/measures#> .
+@prefix food:     <https://w3id.org/aleph/ns/food#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+
+# A starter set of the words an amount is named in.
+#
+# The food vocabulary says that a hand quantity counts in a measure and that an
+# unspecified quantity is left open in a recognised way. The measures and the
+# ways themselves live here, so that the vocabulary carries definitions and this
+# document carries the stock, which grows.
+#
+# Every measure holds its own written forms, one per CLDR plural category, so
+# that neither the language nor the number beside it is frozen into the data.
+# German and English both select on one/other; Polish selects on one/few/many/
+# other and French on one/many/other, which is why the category is recorded
+# rather than a grammatical number. A language a measure has no form in simply
+# has none: the form is chosen when the amount is shown.
+#
+# German kitchen usage keeps several of these endingless in the plural — zwei
+# Bund Petersilie, drei Spritzer Öl — and that is the whole reason the form is a
+# term rather than a rule applied to a word.
+#
+# What is deliberately absent: teaspoon and tablespoon. Both carry a dimension
+# and convert, so they are QUDT units on a measured quantity.
+#
+# Anyone may mint a measure of their own under their own namespace and put it in
+# one of these schemes. Nothing here is closed.
+
+<https://w3id.org/aleph/ns/measures#>
+    rdfs:label   "Aleph Garden measure terms"@en ;
+    rdfs:comment "Hand measures and recognised ways of leaving an amount open, as SKOS concepts carrying their written forms."@en ;
+    dcterms:creator <https://toph.so/profile#me> ;
+    dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
+    rdfs:seeAlso <https://w3id.org/aleph/ns/food#> .
+
+#################################################################
+# Schemes
+#################################################################
+
+measures:handMeasures a skos:ConceptScheme ;
+    skos:prefLabel "Handmaße"@de, "Hand measures"@en ;
+    rdfs:comment "Portions named in words, countable: a number fits in front of one."@en .
+
+measures:openAmounts a skos:ConceptScheme ;
+    skos:prefLabel "Offene Mengen"@de, "Open amounts"@en ;
+    rdfs:comment "Recognised ways of leaving the amount to the cook. No number fits in front of one."@en .
+
+#################################################################
+# Hand measures — small amounts by hand
+#################################################################
+
+measures:pinch a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Prise"@de, "pinch"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Prise"@de,  "pinch"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Prisen"@de, "pinches"@en ] .
+
+measures:dash a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Spritzer"@de, "dash"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Spritzer"@de, "dash"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Spritzer"@de, "dashes"@en ] .
+
+measures:splash a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Schuss"@de, "splash"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Schuss"@de, "splash"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Schuss"@de, "splashes"@en ] .
+
+measures:drop a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Tropfen"@de, "drop"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Tropfen"@de, "drop"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Tropfen"@de, "drops"@en ] .
+
+measures:handful a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Handvoll"@de, "handful"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Handvoll"@de, "handful"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Handvoll"@de, "handfuls"@en ] .
+
+#################################################################
+# Hand measures — portions a plant comes in
+#################################################################
+
+measures:clove a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Zehe"@de, "clove"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Zehe"@de,  "clove"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Zehen"@de, "cloves"@en ] .
+
+measures:bulb a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Knolle"@de, "bulb"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Knolle"@de,  "bulb"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Knollen"@de, "bulbs"@en ] .
+
+measures:head a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Kopf"@de, "head"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Kopf"@de,   "head"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Köpfe"@de,  "heads"@en ] .
+
+measures:bunch a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Bund"@de, "bunch"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Bund"@de, "bunch"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Bund"@de, "bunches"@en ] .
+
+measures:stalk a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Stange"@de, "stalk"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Stange"@de,  "stalk"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Stangen"@de, "stalks"@en ] .
+
+measures:sprig a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Zweig"@de, "sprig"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Zweig"@de,  "sprig"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Zweige"@de, "sprigs"@en ] .
+
+measures:leaf a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Blatt"@de, "leaf"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Blatt"@de,   "leaf"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Blätter"@de, "leaves"@en ] .
+
+measures:slice a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Scheibe"@de, "slice"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Scheibe"@de,  "slice"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Scheiben"@de, "slices"@en ] .
+
+#################################################################
+# Hand measures — the portion a thing is sold in
+#
+# A shopping list asks for two tins of tomatoes and no weight, and the amount
+# stays unweighable until someone reads the label. That keeps these out of the
+# measured shape and in here.
+#################################################################
+
+measures:can a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Dose"@de, "can"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Dose"@de,  "can"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Dosen"@de, "cans"@en ] .
+
+measures:jar a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Glas"@de, "jar"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Glas"@de,   "jar"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Gläser"@de, "jars"@en ] .
+
+measures:pack a skos:Concept, food:HandMeasure ;
+    skos:inScheme measures:handMeasures ;
+    skos:prefLabel "Packung"@de, "pack"@en ;
+    food:countForm
+        [ food:pluralCategory "one"   ; skos:prefLabel "Packung"@de,  "pack"@en ] ,
+        [ food:pluralCategory "other" ; skos:prefLabel "Packungen"@de, "packs"@en ] .
+
+#################################################################
+# Open amounts
+#
+# No forms per count here: nothing stands in front of these to agree with.
+#################################################################
+
+measures:toTaste a skos:Concept, food:OpenAmount ;
+    skos:inScheme measures:openAmounts ;
+    skos:prefLabel "nach Geschmack"@de, "to taste"@en .
+
+measures:asNeeded a skos:Concept, food:OpenAmount ;
+    skos:inScheme measures:openAmounts ;
+    skos:prefLabel "nach Bedarf"@de, "as needed"@en .
+
+measures:forFrying a skos:Concept, food:OpenAmount ;
+    skos:inScheme measures:openAmounts ;
+    skos:prefLabel "zum Braten"@de, "for frying"@en .
+
+measures:forGreasing a skos:Concept, food:OpenAmount ;
+    skos:inScheme measures:openAmounts ;
+    skos:prefLabel "zum Einfetten"@de, "for greasing"@en .
+
+measures:forServing a skos:Concept, food:OpenAmount ;
+    skos:inScheme measures:openAmounts ;
+    skos:prefLabel "zum Servieren"@de, "for serving"@en .

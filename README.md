@@ -35,6 +35,20 @@ outright, so that a reader sees at a glance whether arithmetic is allowed here.
 | `https://w3id.org/aleph/ns/food#` | [`food.ttl`](food.ttl) |
 | `https://w3id.org/aleph/ns/food/shapes` | [`food-shapes.ttl`](food-shapes.ttl) |
 
+### Measures
+
+**Playground.**
+
+The words an amount is named in: hand measures a number fits in front of, and
+recognised ways of leaving the amount open. A starter set of SKOS concepts for
+the food vocabulary, kept apart from it because the stock grows while the
+definitions do not. Each measure carries its own written forms, one per CLDR
+plural category, so the word can follow both the language and the number.
+
+| Cite this | Served from |
+|---|---|
+| `https://w3id.org/aleph/ns/measures#` | [`measures.ttl`](measures.ttl) |
+
 ### Garden
 
 **Playground.**

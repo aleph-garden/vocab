@@ -1,5 +1,6 @@
 @prefix shapes:  <https://w3id.org/aleph/ns/food/shapes#> .
 @prefix food:    <https://w3id.org/aleph/ns/food#> .
+@prefix measures: <https://w3id.org/aleph/ns/measures#> .
 @prefix sh:      <http://www.w3.org/ns/shacl#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
@@ -315,7 +316,7 @@ food:HandMeasureShape
   sh:property [
     sh:path skos:inScheme ;
     sh:name "Liste" ;
-    sh:hasValue food:handMeasures ;
+    sh:hasValue measures:handMeasures ;
     sh:nodeKind sh:IRI ;
     sh:minCount 1 ; sh:maxCount 1 ;
     sh:order 1 ;
@@ -376,7 +377,7 @@ food:OpenAmountShape
   sh:property [
     sh:path skos:inScheme ;
     sh:name "Liste" ;
-    sh:hasValue food:openAmounts ;
+    sh:hasValue measures:openAmounts ;
     sh:nodeKind sh:IRI ;
     sh:minCount 1 ; sh:maxCount 1 ;
     sh:order 1 ;
