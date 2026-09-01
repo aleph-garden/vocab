@@ -67,7 +67,8 @@ food:IngredientRequirementShape
   sh:property [
     sh:path food:substance ;
     sh:name "Stoff" ;
-    sh:description "Der Stoff, nicht das Produkt. Verweis, nie Text — sonst nimmt eine Zeichenkette still den Platz eines Links ein." ;
+    sh:description """Der Stoff, nicht das Produkt. Verweis, nie Text — sonst
+nimmt eine Zeichenkette still den Platz eines Links ein.""" ;
     sh:nodeKind sh:IRI ;
     sh:minCount 1 ; sh:maxCount 1 ;
     sh:order 1 ;
@@ -101,7 +102,8 @@ food:MeasuredQuantityShape
   sh:name "Gemessene Menge" ;
   sh:property [
     sh:path schema:value ; sh:name "Wert" ;
-    sh:description "Genauer Betrag. Wer einen Bereich meint, lässt dies leer und füllt Von/Bis." ;
+    sh:description """Genauer Betrag. Wer einen Bereich meint, lässt dies leer
+und füllt Von/Bis.""" ;
     sh:datatype xsd:decimal ; sh:pattern "^[0-9]+(\\.[0-9]+)?$" ;
     sh:maxCount 1 ; sh:order 1 ;
   ] ;
@@ -242,7 +244,8 @@ food:HandQuantityShape
   sh:property [
     sh:path food:handMeasure ;
     sh:name "Handmaß" ;
-    sh:description "Verweis auf ein bekanntes Handmaß. Trägt seine Wortformen selbst, also steht hier kein Wort." ;
+    sh:description """Verweis auf ein bekanntes Handmaß. Trägt seine Wortformen
+selbst, also steht hier kein Wort.""" ;
     sh:nodeKind sh:IRI ;
     sh:maxCount 1 ;
     sh:order 4 ;
@@ -250,7 +253,8 @@ food:HandQuantityShape
   sh:property [
     sh:path schema:unitText ;
     sh:name "Handmaß, ausgeschrieben" ;
-    sh:description "Für ein Maß, das die Liste nicht führt. Steht dann so da, wie es getippt wurde — mitsamt der Zahl, die dazu passen muss." ;
+    sh:description """Für ein Maß, das die Liste nicht führt. Steht dann so da,
+wie es getippt wurde — mitsamt der Zahl, die dazu passen muss.""" ;
     sh:datatype rdf:langString ;
     sh:pattern "^\\S(.*\\S)?$" ;
     sh:minLength 1 ;
@@ -281,7 +285,8 @@ food:UnspecifiedQuantityShape
   sh:property [
     sh:path food:openAmount ;
     sh:name "So bleibt es offen" ;
-    sh:description "Verweis auf eine bekannte Art, die Menge offen zu lassen — „nach Geschmack“, „nach Bedarf“. Übersetzt sich dadurch mit." ;
+    sh:description """Verweis auf eine bekannte Art, die Menge offen zu lassen
+— „nach Geschmack“, „nach Bedarf“. Übersetzt sich dadurch mit.""" ;
     sh:nodeKind sh:IRI ;
     sh:maxCount 1 ;
     sh:order 1 ;
@@ -289,7 +294,8 @@ food:UnspecifiedQuantityShape
   sh:property [
     sh:path skos:note ;
     sh:name "Anmerkung" ;
-    sh:description "Die einmalige Bemerkung daneben, etwa „nach Pfanne“. Kein Ersatz für die Angabe darüber." ;
+    sh:description """Die einmalige Bemerkung daneben, etwa „nach Pfanne“. Kein
+Ersatz für die Angabe darüber.""" ;
     sh:datatype rdf:langString ;
     sh:pattern "^\\S(.*\\S)?$" ;
     sh:uniqueLang true ;
@@ -324,7 +330,8 @@ food:HandMeasureShape
   sh:property [
     sh:path skos:prefLabel ;
     sh:name "Name" ;
-    sh:description "Die Nennform, wie sie in einer Auswahl steht — nicht die Form, die neben einer Zahl erscheint." ;
+    sh:description """Die Nennform, wie sie in einer Auswahl steht — nicht die
+Form, die neben einer Zahl erscheint.""" ;
     sh:datatype rdf:langString ;
     sh:pattern "^\\S(.*\\S)?$" ;
     sh:uniqueLang true ;
@@ -334,7 +341,8 @@ food:HandMeasureShape
   sh:property [
     sh:path food:countForm ;
     sh:name "Wortform je Fach" ;
-    sh:description "Mindestens eine. Welche gilt, entscheidet die Zahl beim Anzeigen, nicht der Schreibende." ;
+    sh:description """Mindestens eine. Welche gilt, entscheidet die Zahl beim
+Anzeigen, nicht der Schreibende.""" ;
     sh:nodeKind sh:BlankNodeOrIRI ;
     sh:minCount 1 ;
     sh:order 3 ;
@@ -347,7 +355,8 @@ food:CountFormShape
   sh:property [
     sh:path food:pluralCategory ;
     sh:name "Fach" ;
-    sh:description "Eine CLDR-Auswahlkategorie. Welche eine Sprache überhaupt kennt, sagt CLDR — Japanisch nur „other“, Arabisch alle sechs." ;
+    sh:description """Eine CLDR-Auswahlkategorie. Welche eine Sprache überhaupt
+kennt, sagt CLDR — Japanisch nur „other“, Arabisch alle sechs.""" ;
     sh:datatype xsd:string ;
     sh:in ( "zero" "one" "two" "few" "many" "other" ) ;
     sh:minCount 1 ; sh:maxCount 1 ;

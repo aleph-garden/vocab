@@ -36,7 +36,8 @@ shapes:PlacementShape a sh:NodeShape ;
     sh:targetClass garden:Placement ;
     sh:property [
         sh:path garden:concept ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
-        sh:message "A placement binds exactly one concept. The concept may be a foreign IRI." ] ;
+        sh:message """A placement binds exactly one concept. The concept may be
+a foreign IRI.""" ] ;
     sh:property [
         sh:path garden:ordinal ; sh:minCount 1 ; sh:maxCount 1 ;
         sh:datatype xsd:integer ; sh:minInclusive 1 ;
@@ -57,7 +58,9 @@ shapes:PlacementShape a sh:NodeShape ;
         [ sh:property [ sh:path garden:world  ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
           sh:property [ sh:path garden:parent ; sh:maxCount 0 ] ]
     ) ;
-    sh:message "A placement carries exactly one of garden:parent or garden:world — a region root hangs from the world, everything else from its parent." .
+    sh:message """A placement carries exactly one of garden:parent or
+garden:world — a region root hangs from the world, everything else from its
+parent.""" .
 
 #################################################################
 # World and layout
@@ -67,7 +70,8 @@ shapes:WorldShape a sh:NodeShape ;
     sh:targetClass garden:World ;
     sh:property [
         sh:path garden:layout ; sh:minCount 1 ; sh:maxCount 1 ;
-        sh:message "The world needs a layout — without it the arrangement of regions relative to each other is undefined." ] .
+        sh:message """The world needs a layout — without it the arrangement of
+regions relative to each other is undefined.""" ] .
 
 shapes:LayoutShape a sh:NodeShape ;
     sh:targetClass garden:Layout ;
@@ -86,10 +90,12 @@ shapes:LayoutStrategyShape a sh:NodeShape ;
     sh:targetClass garden:LayoutStrategy ;
     sh:property [
         sh:path garden:appendStable ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:boolean ;
-        sh:message "A layout strategy must declare garden:appendStable — whether position(i) is independent of the total count." ] ;
+        sh:message """A layout strategy must declare garden:appendStable —
+whether position(i) is independent of the total count.""" ] ;
     sh:property [
         sh:path garden:sourced ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:boolean ;
-        sh:message "A layout strategy must declare garden:sourced — whether it draws positions from external data." ] ;
+        sh:message """A layout strategy must declare garden:sourced — whether
+it draws positions from external data.""" ] ;
     sh:property [
         sh:path garden:implementation ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
     sh:property [
@@ -109,7 +115,8 @@ shapes:LinkShape a sh:NodeShape ;
         sh:message "A link has exactly one target concept, and it is an IRI." ] ;
     sh:property [
         sh:path garden:relation ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
-        sh:message "A link states exactly one relation. The relation sets the direction." ] ;
+        sh:message """A link states exactly one relation. The relation sets the
+direction.""" ] ;
     sh:property [
         sh:path garden:from ; sh:disjoint garden:to ;
         sh:message "A link must connect two different concepts." ] ;
@@ -141,7 +148,9 @@ shapes:LinkShape a sh:NodeShape ;
     # needs preprocessing first.
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Hierarchy and association are disjoint in SKOS: two concepts already connected through broader/narrower must not also carry a link. Things sharing a room get no wormhole to each other." ;
+        sh:message """Hierarchy and association are disjoint in SKOS: two
+concepts already connected through broader/narrower must not also carry a link.
+Things sharing a room get no wormhole to each other.""" ;
         sh:select """
             SELECT $this ?value WHERE {
               $this <https://w3id.org/aleph/ns/garden#from> ?a ;
@@ -158,7 +167,8 @@ shapes:LinkShape a sh:NodeShape ;
 shapes:RelationShape a sh:NodeShape ;
     sh:targetObjectsOf garden:relation ;
     sh:in ( garden:prerequisiteFor garden:generalizes garden:contrastsWith garden:corresponds ) ;
-    sh:message "A link relation is one of the four subproperties of skos:related the contract defines." .
+    sh:message """A link relation is one of the four subproperties of
+skos:related the contract defines.""" .
 
 #################################################################
 # Route and stops
@@ -169,7 +179,8 @@ shapes:StopShape a sh:NodeShape ;
     sh:property [
         sh:path garden:ordinal ; sh:minCount 1 ; sh:maxCount 1 ;
         sh:datatype xsd:integer ; sh:minInclusive 1 ;
-        sh:message "A stop needs exactly one ordinal. A vacated stop keeps it, so the indices after it stand still." ] ;
+        sh:message """A stop needs exactly one ordinal. A vacated stop keeps
+it, so the indices after it stand still.""" ] ;
     sh:property [
         sh:path garden:concept ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
     sh:property [
@@ -180,7 +191,8 @@ shapes:StopShape a sh:NodeShape ;
         [ sh:property [ sh:path garden:vacant  ; sh:minCount 1 ; sh:hasValue true ] ;
           sh:property [ sh:path garden:concept ; sh:maxCount 0 ] ]
     ) ;
-    sh:message "A stop is either occupied by a concept or marked garden:vacant true — never both, never neither." .
+    sh:message """A stop is either occupied by a concept or marked
+garden:vacant true — never both, never neither.""" .
 
 shapes:RouteShape a sh:NodeShape ;
     sh:targetClass garden:Route ;
@@ -198,7 +210,8 @@ shapes:RouteOrdinalGapShape a sh:NodeShape ;
     sh:targetClass garden:Route ;
     sh:sparql [
         a sh:SPARQLConstraint ;
-        sh:message "Route stop ordinals run without gaps from 1. New stops get max + 1; inserting between is not provided for." ;
+        sh:message """Route stop ordinals run without gaps from 1. New stops
+get max + 1; inserting between is not provided for.""" ;
         sh:select """
             SELECT $this ?value WHERE {
               $this <https://w3id.org/aleph/ns/garden#stop> ?stop .
@@ -253,7 +266,8 @@ shapes:CardStateShape a sh:NodeShape ;
         sh:path garden:suspended ; sh:maxCount 1 ; sh:datatype xsd:boolean ] ;
     sh:property [
         sh:path garden:lastTransition ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
-        sh:message "A card points at most once at the transition that produced its current state." ] .
+        sh:message """A card points at most once at the transition that
+produced its current state.""" ] .
 
 # A new card has no scheduler state. FSRS separates "new" from "learnt", and the
 # initial values only come into being at the first review, out of its rating —
@@ -279,7 +293,10 @@ shapes:CardMemoryShape a sh:NodeShape ;
           sh:property [ sh:path garden:lastReview ; sh:minCount 1 ; sh:maxCount 1 ;
                         sh:datatype xsd:dateTime ] ]
     ) ;
-    sh:message "A card with reps 0 carries neither stability, difficulty nor lastReview; from the first review on it carries exactly one of each — stability above zero, difficulty in [1, 10], and the moment the retrievability is measured from." .
+    sh:message """A card with reps 0 carries neither stability, difficulty nor
+lastReview; from the first review on it carries exactly one of each — stability
+above zero, difficulty in [1, 10], and the moment the retrievability is
+measured from.""" .
 
 shapes:PlaceCardShape a sh:NodeShape ;
     sh:targetClass garden:PlaceCard ;
@@ -303,7 +320,8 @@ shapes:LinkCardShape a sh:NodeShape ;
                   sh:message "A link card reviews exactly one connection." ] ;
     sh:property [ sh:path garden:direction ; sh:minCount 1 ; sh:maxCount 1 ;
                   sh:in ( garden:forward garden:reverse ) ;
-                  sh:message "A link card states which end it asks from — a connection is answerable from either." ] ;
+                  sh:message """A link card states which end it asks from — a
+connection is answerable from either.""" ] ;
     sh:property [ sh:path garden:concept  ; sh:maxCount 0 ] ;
     sh:property [ sh:path garden:route    ; sh:maxCount 0 ] ;
     sh:property [ sh:path garden:sequence ; sh:maxCount 0 ] .
@@ -350,11 +368,13 @@ shapes:TransitionShape a sh:NodeShape ;
     sh:property [
         sh:path garden:stabilityBefore ; sh:maxCount 1 ;
         sh:datatype xsd:decimal ; sh:minExclusive 0.0 ;
-        sh:message "A recorded stability before the transition is a single value greater than zero." ] ;
+        sh:message """A recorded stability before the transition is a single
+value greater than zero.""" ] ;
     sh:property [
         sh:path garden:difficultyBefore ; sh:maxCount 1 ;
         sh:datatype xsd:decimal ; sh:minInclusive 1.0 ; sh:maxInclusive 10.0 ;
-        sh:message "A recorded difficulty before the transition is a single value in [1, 10]." ] .
+        sh:message """A recorded difficulty before the transition is a single
+value in [1, 10].""" ] .
 
 # The before-state is what makes a suffix replayable, and stability alone is not
 # enough: the stability update is a function of stability, difficulty,
@@ -375,20 +395,23 @@ shapes:TransitionBeforeStateShape a sh:NodeShape ;
         [ sh:property [ sh:path garden:stabilityBefore  ; sh:maxCount 0 ] ;
           sh:property [ sh:path garden:difficultyBefore ; sh:maxCount 0 ] ]
     ) ;
-    sh:message "stabilityBefore and difficultyBefore are recorded together or not at all — half a before-state cannot be replayed from." .
+    sh:message """stabilityBefore and difficultyBefore are recorded together or
+not at all — half a before-state cannot be replayed from.""" .
 
 shapes:AttemptShape a sh:NodeShape ;
     sh:targetClass garden:Attempt ;
     sh:property [ sh:path garden:rating ; sh:minCount 1 ; sh:maxCount 1 ;
                   sh:in ( garden:again garden:hard garden:good garden:easy ) ;
-                  sh:message "An attempt carries exactly one rating from the contract's four." ] ;
+                  sh:message """An attempt carries exactly one rating from the
+contract's four.""" ] ;
     sh:property [ sh:path garden:latency ; sh:maxCount 1 ; sh:datatype xsd:decimal ; sh:minInclusive 0.0 ] ;
     sh:property [ sh:path garden:retrievability ; sh:maxCount 1 ;
                   sh:datatype xsd:decimal ; sh:minInclusive 0.0 ; sh:maxInclusive 1.0 ] ;
     sh:property [ sh:path garden:reached  ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 0 ] ;
     sh:property [ sh:path garden:failedAt ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 1 ] ;
     sh:property [ sh:path garden:kind ; sh:maxCount 0 ;
-                  sh:message "garden:kind belongs to a displacement. An attempt is a retrieval, not an intervention." ] .
+                  sh:message """garden:kind belongs to a displacement. An
+attempt is a retrieval, not an intervention.""" ] .
 
 shapes:StopTimingShape a sh:NodeShape ;
     sh:targetClass garden:StopTiming ;
@@ -402,22 +425,27 @@ shapes:DisplacementShape a sh:NodeShape ;
     sh:targetClass garden:Displacement ;
     sh:property [ sh:path garden:kind ; sh:minCount 1 ; sh:maxCount 1 ;
                   sh:in ( garden:Move garden:Reskin garden:Relayout garden:Promotion ) ;
-                  sh:message "A displacement names exactly one of the four interventions." ] ;
+                  sh:message """A displacement names exactly one of the four
+interventions.""" ] ;
     sh:property [ sh:path garden:rating ; sh:maxCount 0 ;
-                  sh:message "A displacement has no rating. It records a decision, not a retrieval, and must not read as a review to a later parameter fit." ] .
+                  sh:message """A displacement has no rating. It records a
+decision, not a retrieval, and must not read as a review to a later parameter
+fit.""" ] .
 
 shapes:PruningShape a sh:NodeShape ;
     sh:targetClass garden:Pruning ;
     sh:property [
         sh:path garden:card ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
-        sh:message "A pruning record belongs to exactly one card — it is the receipt, not the decision." ] ;
+        sh:message """A pruning record belongs to exactly one card — it is the
+receipt, not the decision.""" ] ;
     sh:property [
         sh:path garden:prunedBefore ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ;
         sh:message "A pruning record states exactly one cut-off." ] ;
     sh:property [
         sh:path garden:prunedCount ; sh:minCount 1 ; sh:maxCount 1 ;
         sh:datatype xsd:integer ; sh:minInclusive 1 ;
-        sh:message "A pruning record states how many transitions it removed, at least one." ] ;
+        sh:message """A pruning record states how many transitions it removed,
+at least one.""" ] ;
     sh:property [
         sh:path schema:startTime ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] .
 

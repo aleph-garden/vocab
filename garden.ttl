@@ -21,7 +21,8 @@
 
 <https://w3id.org/aleph/ns/garden#>
     rdfs:label   "Aleph Garden vocabulary"@en ;
-    rdfs:comment "Terms for placing concepts in a walkable garden, connecting them, routing through them, and scheduling their review."@en ;
+    rdfs:comment """Terms for placing concepts in a walkable garden, connecting
+them, routing through them, and scheduling their review."""@en ;
     dcterms:creator <https://toph.so/profile#me> ;
     dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
     rdfs:seeAlso <https://w3id.org/aleph/ns/garden/shapes> .
@@ -33,72 +34,96 @@
 garden:World a rdfs:Class ;
     rdfs:subClassOf schema:Place ;
     rdfs:label   "World"@en ;
-    rdfs:comment "The single root that holds the topmost ordering. Without it the arrangement of regions relative to each other is undefined, while connections are supposed to point in the true spatial direction of their counterpart."@en .
+    rdfs:comment """The single root that holds the topmost ordering. Without it
+the arrangement of regions relative to each other is undefined, while
+connections are supposed to point in the true spatial direction of their
+counterpart."""@en .
 
 garden:Placement a rdfs:Class ;
     rdfs:subClassOf schema:Place ;
     rdfs:label   "Placement"@en ;
-    rdfs:comment "Binds a concept to a place. Exactly one per concept, permanent. Holds a parent and an ordinal; where that lands in the image is decided by a layout strategy, never by stored coordinates."@en .
+    rdfs:comment """Binds a concept to a place. Exactly one per concept,
+permanent. Holds a parent and an ordinal; where that lands in the image is
+decided by a layout strategy, never by stored coordinates."""@en .
 
 garden:Layout a rdfs:Class ;
     rdfs:subClassOf schema:Intangible ;
     rdfs:label   "Layout"@en ;
-    rdfs:comment "The arrangement of one place's children: a strategy, an optional seed, and whether the seed is frozen. Set per place, frozen per place."@en .
+    rdfs:comment """The arrangement of one place's children: a strategy, an
+optional seed, and whether the seed is frozen. Set per place, frozen per place.
+"""@en .
 
 garden:LayoutStrategy a rdfs:Class ;
     rdfs:subClassOf schema:Intangible ;
     rdfs:label   "Layout strategy"@en ;
-    rdfs:comment "A function from index to position, identified by IRI and implemented at a URL."@en .
+    rdfs:comment """A function from index to position, identified by IRI and
+implemented at a URL."""@en .
 
 garden:Link a rdfs:Class ;
     rdfs:subClassOf schema:Intangible ;
     rdfs:label   "Link"@en ;
-    rdfs:comment "A directed connection between two concepts, addressable so that it can carry content of its own. A link with children is a place; a link without children is a passage. That is a fact about the graph, not a settable property."@en .
+    rdfs:comment """A directed connection between two concepts, addressable so
+that it can carry content of its own. A link with children is a place; a link
+without children is a passage. That is a fact about the graph, not a settable
+property."""@en .
 
 garden:Route a rdfs:Class ;
     rdfs:subClassOf schema:ItemList ;
     rdfs:label   "Route"@en ;
-    rdfs:comment "An ordered sequence of stops laid through the terrain. Route membership is the loci marking; cards are scheduler state."@en .
+    rdfs:comment """An ordered sequence of stops laid through the terrain.
+Route membership is the loci marking; cards are scheduler state."""@en .
 
 garden:Stop a rdfs:Class ;
     rdfs:subClassOf schema:ListItem ;
     rdfs:label   "Stop"@en ;
-    rdfs:comment "One station of a route. A named resource with an ordinal rather than a list member, so that vacating a stop keeps the indices after it intact."@en .
+    rdfs:comment """One station of a route. A named resource with an ordinal
+rather than a list member, so that vacating a stop keeps the indices after it
+intact."""@en .
 
 garden:Card a rdfs:Class ;
     rdfs:subClassOf schema:Intangible ;
     rdfs:label   "Card"@en ;
-    rdfs:comment "Scheduler state for one reviewable item. Abstract; use one of the five concrete card types."@en .
+    rdfs:comment """Scheduler state for one reviewable item. Abstract; use one
+of the five concrete card types."""@en .
 
 garden:PlaceCard a rdfs:Class ;
     rdfs:subClassOf garden:Card ;
     rdfs:label   "Place card"@en ;
-    rdfs:comment "Place to concept: standing somewhere and reading off what lies there. Self-graded."@en .
+    rdfs:comment """Place to concept: standing somewhere and reading off what
+lies there. Self-graded."""@en .
 
 garden:ConceptCard a rdfs:Class ;
     rdfs:subClassOf garden:Card ;
     rdfs:label   "Concept card"@en ;
-    rdfs:comment "Concept to place: direct addressing. Self-graded. Independent state from the place card for the same concept — recall in one direction says nothing about the other."@en .
+    rdfs:comment """Concept to place: direct addressing. Self-graded.
+Independent state from the place card for the same concept — recall in one
+direction says nothing about the other."""@en .
 
 garden:LinkCard a rdfs:Class ;
     rdfs:subClassOf garden:Card ;
     rdfs:label   "Link card"@en ;
-    rdfs:comment "Connection to destination. Self-graded. Carries a direction, because a connection is answerable from either end."@en .
+    rdfs:comment """Connection to destination. Self-graded. Carries a
+direction, because a connection is answerable from either end."""@en .
 
 garden:RouteCard a rdfs:Class ;
     rdfs:subClassOf garden:Card ;
     rdfs:label   "Route card"@en ;
-    rdfs:comment "Walking a route end to end. Graded by latency, not by a record ratio: a route has fixed length, so a record ratio saturates after the first full walk."@en .
+    rdfs:comment """Walking a route end to end. Graded by latency, not by a
+record ratio: a route has fixed length, so a record ratio saturates after the
+first full walk."""@en .
 
 garden:SequenceCard a rdfs:Class ;
     rdfs:subClassOf garden:Card ;
     rdfs:label   "Sequence card"@en ;
-    rdfs:comment "Reciting a character sequence. Graded against the previous record, which works here because the sequence is unbounded."@en .
+    rdfs:comment """Reciting a character sequence. Graded against the previous
+record, which works here because the sequence is unbounded."""@en .
 
 garden:Transition a rdfs:Class ;
     rdfs:subClassOf schema:Action ;
     rdfs:label   "Transition"@en ;
-    rdfs:comment "A state change at a card. Records the stability before and after, which makes every suffix of the log replayable from its own first stabilityBefore."@en .
+    rdfs:comment """A state change at a card. Records the stability before and
+after, which makes every suffix of the log replayable from its own first
+stabilityBefore."""@en .
 
 garden:Attempt a rdfs:Class ;
     rdfs:subClassOf garden:Transition ;
@@ -108,7 +133,10 @@ garden:Attempt a rdfs:Class ;
 garden:Displacement a rdfs:Class ;
     rdfs:subClassOf garden:Transition ;
     rdfs:label   "Displacement"@en ;
-    rdfs:comment "A transition that follows from an intervention — a move, a re-skin, a layout change or a promotion. Logs a decision rather than a retrieval, and is deliberately not an attempt so that a later parameter fit does not read it as a review."@en .
+    rdfs:comment """A transition that follows from an intervention — a move, a
+re-skin, a layout change or a promotion. Logs a decision rather than a
+retrieval, and is deliberately not an attempt so that a later parameter fit
+does not read it as a review."""@en .
 
 garden:StopTiming a rdfs:Class ;
     rdfs:subClassOf schema:Intangible ;
@@ -118,7 +146,10 @@ garden:StopTiming a rdfs:Class ;
 garden:Pruning a rdfs:Class ;
     rdfs:subClassOf prov:Activity ;
     rdfs:label   "Pruning"@en ;
-    rdfs:comment "A record that transition history before a cut-off was removed. Without it a pruned history looks like a card that came into existence later than it did — the log would lie silently about its own completeness."@en .
+    rdfs:comment """A record that transition history before a cut-off was
+removed. Without it a pruned history looks like a card that came into existence
+later than it did — the log would lie silently about its own completeness.
+"""@en .
 
 #################################################################
 # World, placement and hierarchy
@@ -131,12 +162,17 @@ garden:layout a rdf:Property ;
 
 garden:concept a rdf:Property ;
     rdfs:label   "concept"@en ;
-    rdfs:comment "The concept placed here, reviewed by this card, or visited at this stop. May be a foreign IRI; no local copy is minted."@en ;
+    rdfs:comment """The concept placed here, reviewed by this card, or visited
+at this stop. May be a foreign IRI; no local copy is minted."""@en ;
     rdfs:range   skos:Concept .
 
 garden:parent a rdf:Property ;
     rdfs:label   "parent"@en ;
-    rdfs:comment "The place this one sits inside. Absent exactly on a region root, which carries garden:world instead. Single-valued, which is why it cannot simply follow skos:broader: the concept graph is a DAG and the placement structure is a forest, so a placement is a projection of the one onto the other and not a copy of it."@en .
+    rdfs:comment """The place this one sits inside. Absent exactly on a region
+root, which carries garden:world instead. Single-valued, which is why it cannot
+simply follow skos:broader: the concept graph is a DAG and the placement
+structure is a forest, so a placement is a projection of the one onto the other
+and not a copy of it."""@en .
 
 garden:world a rdf:Property ;
     rdfs:label   "world"@en ;
@@ -145,12 +181,16 @@ garden:world a rdf:Property ;
 
 garden:ordinal a rdf:Property ;
     rdfs:label   "ordinal"@en ;
-    rdfs:comment "Position among siblings, unique under the same parent, starting at 1. Forms the default route through that place. New entries get max + 1; nothing is ever renumbered."@en ;
+    rdfs:comment """Position among siblings, unique under the same parent,
+starting at 1. Forms the default route through that place. New entries get max
++ 1; nothing is ever renumbered."""@en ;
     rdfs:range   xsd:integer .
 
 garden:form a rdf:Property ;
     rdfs:label   "form"@en ;
-    rdfs:comment "The catalogue entry this place is drawn as. A form carries the binding to its rendering as a URL, so the renderer holds no table of special cases."@en ;
+    rdfs:comment """The catalogue entry this place is drawn as. A form carries
+the binding to its rendering as a URL, so the renderer holds no table of
+special cases."""@en ;
     rdfs:range   skos:Concept .
 
 # A form says what kind of thing a place is; these two say which one it is. Both
@@ -163,7 +203,9 @@ garden:form a rdf:Property ;
 
 garden:inscription a rdf:Property ;
     rdfs:label   "inscription"@en ;
-    rdfs:comment "The text read off the place itself: a spine, a plaque, a word cut into a stone. Not the concept's label — an inscription is chosen for recall and may say what the concept never says."@en ;
+    rdfs:comment """The text read off the place itself: a spine, a plaque, a
+word cut into a stone. Not the concept's label — an inscription is chosen for
+recall and may say what the concept never says."""@en ;
     rdfs:range   rdfs:Literal .
 
 #################################################################
@@ -182,12 +224,15 @@ garden:seed a rdf:Property ;
 
 garden:locked a rdf:Property ;
     rdfs:label   "locked"@en ;
-    rdfs:comment "Whether the seed is frozen. A locked layout rejects further seed changes."@en ;
+    rdfs:comment """Whether the seed is frozen. A locked layout rejects further
+seed changes."""@en ;
     rdfs:range   xsd:boolean .
 
 garden:implementation a rdf:Property ;
     rdfs:label   "implementation"@en ;
-    rdfs:comment "Where the code behind this identity is fetched from. Whether an ESM module or a WASM plugin lies there is a property of the URL, not of the garden."@en .
+    rdfs:comment """Where the code behind this identity is fetched from.
+Whether an ESM module or a WASM plugin lies there is a property of the URL, not
+of the garden."""@en .
 
 garden:dimensions a rdf:Property ;
     rdfs:label   "dimensions"@en ;
@@ -196,12 +241,19 @@ garden:dimensions a rdf:Property ;
 
 garden:appendStable a rdf:Property ;
     rdfs:label   "append stable"@en ;
-    rdfs:comment "Normative. True when position(i) does not depend on the total number of elements. A grid with a fixed column count qualifies; a grid that rewraps to stay square does not, because element 26 moves the 25 before it. Switching a place onto a non-append-stable strategy displaces every child at once."@en ;
+    rdfs:comment """Normative. True when position(i) does not depend on the
+total number of elements. A grid with a fixed column count qualifies; a grid
+that rewraps to stay square does not, because element 26 moves the 25 before
+it. Switching a place onto a non-append-stable strategy displaces every child
+at once."""@en ;
     rdfs:range   xsd:boolean .
 
 garden:sourced a rdf:Property ;
     rdfs:label   "sourced"@en ;
-    rdfs:comment "Normative. True when the strategy draws positions from external data. Such a strategy must be materialised on first use — layout and backdrop together — because external sources are authoring inputs, never live views."@en ;
+    rdfs:comment """Normative. True when the strategy draws positions from
+external data. Such a strategy must be materialised on first use — layout and
+backdrop together — because external sources are authoring inputs, never live
+views."""@en ;
     rdfs:range   xsd:boolean .
 
 #################################################################
@@ -210,7 +262,9 @@ garden:sourced a rdf:Property ;
 
 garden:from a rdf:Property ;
     rdfs:label   "from"@en ;
-    rdfs:comment "Source concept of a connection. Points at a concept rather than a placement, so that re-sorting the terrain is not also an edit to the connections."@en ;
+    rdfs:comment """Source concept of a connection. Points at a concept rather
+than a placement, so that re-sorting the terrain is not also an edit to the
+connections."""@en ;
     rdfs:range   skos:Concept .
 
 garden:to a rdf:Property ;
@@ -220,28 +274,37 @@ garden:to a rdf:Property ;
 
 garden:relation a rdf:Property ;
     rdfs:label   "relation"@en ;
-    rdfs:comment "Which kind of association this connection asserts. The relation sets the direction; IRI ordering does not."@en ;
+    rdfs:comment """Which kind of association this connection asserts. The
+relation sets the direction; IRI ordering does not."""@en ;
     rdfs:range   rdf:Property .
 
 garden:prerequisiteFor a rdf:Property ;
     rdfs:subPropertyOf skos:related ;
     rdfs:label   "prerequisite for"@en ;
-    rdfs:comment "The source has to be held before the target can be understood. Directed."@en .
+    rdfs:comment """The source has to be held before the target can be
+understood. Directed."""@en .
 
 garden:generalizes a rdf:Property ;
     rdfs:subPropertyOf skos:related ;
     rdfs:label   "generalizes"@en ;
-    rdfs:comment "The source is the general case of which the target is an application. Directed."@en .
+    rdfs:comment """The source is the general case of which the target is an
+application. Directed."""@en .
 
 garden:contrastsWith a rdf:Property ;
     rdfs:subPropertyOf skos:related ;
     rdfs:label   "contrasts with"@en ;
-    rdfs:comment "The two are learned against each other. Symmetric in meaning, so the writer stores the direction whose source IRI sorts lower."@en .
+    rdfs:comment """The two are learned against each other. Symmetric in
+meaning, so the writer stores the direction whose source IRI sorts lower.
+"""@en .
 
 garden:corresponds a rdf:Property ;
     rdfs:subPropertyOf skos:related ;
     rdfs:label   "corresponds to"@en ;
-    rdfs:comment "The two are the same structure seen in two settings, so that a step on one side has a step on the other. Not a prerequisite and not a generalisation: neither end explains the other, they run in parallel. Symmetric in meaning, so the writer stores the direction whose source IRI sorts lower."@en .
+    rdfs:comment """The two are the same structure seen in two settings, so
+that a step on one side has a step on the other. Not a prerequisite and not a
+generalisation: neither end explains the other, they run in parallel. Symmetric
+in meaning, so the writer stores the direction whose source IRI sorts lower.
+"""@en .
 
 #################################################################
 # Routes
@@ -258,7 +321,9 @@ garden:stop a rdf:Property ;
 
 garden:vacant a rdf:Property ;
     rdfs:label   "vacant"@en ;
-    rdfs:comment "True on a stop that has been emptied. The stop keeps its ordinal so the indices after it stand still, and vacant stops do not count towards garden:reached."@en ;
+    rdfs:comment """True on a stop that has been emptied. The stop keeps its
+ordinal so the indices after it stand still, and vacant stops do not count
+towards garden:reached."""@en ;
     rdfs:range   xsd:boolean .
 
 #################################################################
@@ -282,7 +347,11 @@ garden:sequence a rdf:Property ;
 
 garden:record a rdf:Property ;
     rdfs:label   "record"@en ;
-    rdfs:comment "The longest run reached on a sequence card so far, updated to max(record, n) after every session and read before the session it grades. Kept on the card next to the scheduler state rather than reconstructed from history, because it is the basis the grading is measured against and history may have been pruned."@en ;
+    rdfs:comment """The longest run reached on a sequence card so far, updated
+to max(record, n) after every session and read before the session it grades.
+Kept on the card next to the scheduler state rather than reconstructed from
+history, because it is the basis the grading is measured against and history
+may have been pruned."""@en ;
     rdfs:range   xsd:integer .
 
 garden:direction a rdf:Property ;
@@ -292,12 +361,14 @@ garden:direction a rdf:Property ;
 
 garden:stability a rdf:Property ;
     rdfs:label   "stability"@en ;
-    rdfs:comment "FSRS memory stability in days. Authoritative card state, patched rather than recomputed from history."@en ;
+    rdfs:comment """FSRS memory stability in days. Authoritative card state,
+patched rather than recomputed from history."""@en ;
     rdfs:range   xsd:decimal .
 
 garden:difficulty a rdf:Property ;
     rdfs:label   "difficulty"@en ;
-    rdfs:comment "FSRS difficulty in [1, 10]. Survives a displacement — moving a place does not make its concept harder."@en ;
+    rdfs:comment """FSRS difficulty in [1, 10]. Survives a displacement —
+moving a place does not make its concept harder."""@en ;
     rdfs:range   xsd:decimal .
 
 garden:due a rdf:Property ;
@@ -307,27 +378,36 @@ garden:due a rdf:Property ;
 
 garden:reps a rdf:Property ;
     rdfs:label   "reps"@en ;
-    rdfs:comment "Number of reviews. Unchanged by a displacement, which is not a review."@en ;
+    rdfs:comment """Number of reviews. Unchanged by a displacement, which is
+not a review."""@en ;
     rdfs:range   xsd:integer .
 
 garden:lapses a rdf:Property ;
     rdfs:label   "lapses"@en ;
-    rdfs:comment "Number of failed reviews. Unchanged by a displacement, which is not a failed retrieval."@en ;
+    rdfs:comment """Number of failed reviews. Unchanged by a displacement,
+which is not a failed retrieval."""@en ;
     rdfs:range   xsd:integer .
 
 garden:suspended a rdf:Property ;
     rdfs:label   "suspended"@en ;
-    rdfs:comment "Pauses a card without deleting it. Deleting would be the only way to lose history, and would make 'paused' indistinguishable from 'never marked'."@en ;
+    rdfs:comment """Pauses a card without deleting it. Deleting would be the
+only way to lose history, and would make 'paused' indistinguishable from 'never
+marked'."""@en ;
     rdfs:range   xsd:boolean .
 
 garden:lastTransition a rdf:Property ;
     rdfs:label   "last transition"@en ;
-    rdfs:comment "The transition that produced the card's current state. Applying that same transition again is a no-op, which makes a retried patch after a failure safe."@en ;
+    rdfs:comment """The transition that produced the card's current state.
+Applying that same transition again is a no-op, which makes a retried patch
+after a failure safe."""@en ;
     rdfs:range   garden:Transition .
 
 garden:lastReview a rdf:Property ;
     rdfs:label   "last review"@en ;
-    rdfs:comment "When this card last changed state. Kept on the card rather than read out of the last transition, because FSRS needs the elapsed days for retrievability and deriving them from the log breaks exactly when a log has been pruned away entirely — the case pruning exists for."@en ;
+    rdfs:comment """When this card last changed state. Kept on the card rather
+than read out of the last transition, because FSRS needs the elapsed days for
+retrievability and deriving them from the log breaks exactly when a log has
+been pruned away entirely — the case pruning exists for."""@en ;
     rdfs:range   xsd:dateTime .
 
 #################################################################
@@ -347,7 +427,11 @@ garden:kind a rdf:Property ;
 
 garden:stabilityBefore a rdf:Property ;
     rdfs:label   "stability before"@en ;
-    rdfs:comment "The card's stability immediately before this transition. Also the conflict check: a transition whose stabilityBefore does not match the card's current stability is a detectable conflict rather than silent corruption. Absent on the transition that takes a new card out of its stateless condition — there was no stability to record."@en ;
+    rdfs:comment """The card's stability immediately before this transition.
+Also the conflict check: a transition whose stabilityBefore does not match the
+card's current stability is a detectable conflict rather than silent
+corruption. Absent on the transition that takes a new card out of its stateless
+condition — there was no stability to record."""@en ;
     rdfs:range   xsd:decimal .
 
 garden:stabilityAfter a rdf:Property ;
@@ -357,7 +441,11 @@ garden:stabilityAfter a rdf:Property ;
 
 garden:difficultyBefore a rdf:Property ;
     rdfs:label   "difficulty before"@en ;
-    rdfs:comment "The card's difficulty immediately before this transition. Not decoration: the stability update is a function of stability, difficulty, retrievability and rating, so without a recorded difficulty a suffix of the log cannot be recomputed and the replay guarantee is false. Absent together with garden:stabilityBefore on a new card's first transition."@en ;
+    rdfs:comment """The card's difficulty immediately before this transition.
+Not decoration: the stability update is a function of stability, difficulty,
+retrievability and rating, so without a recorded difficulty a suffix of the log
+cannot be recomputed and the replay guarantee is false. Absent together with
+garden:stabilityBefore on a new card's first transition."""@en ;
     rdfs:range   xsd:decimal .
 
 garden:difficultyAfter a rdf:Property ;
@@ -377,7 +465,9 @@ garden:latency a rdf:Property ;
 
 garden:timing a rdf:Property ;
     rdfs:label   "timing"@en ;
-    rdfs:comment "A per-station duration of a walked route. A route card needs these beyond the total, because its rating comes out of the retrieval behaviour across the sequence rather than out of a sum."@en ;
+    rdfs:comment """A per-station duration of a walked route. A route card
+needs these beyond the total, because its rating comes out of the retrieval
+behaviour across the sequence rather than out of a sum."""@en ;
     rdfs:range   garden:StopTiming .
 
 garden:reached a rdf:Property ;
@@ -387,7 +477,8 @@ garden:reached a rdf:Property ;
 
 garden:failedAt a rdf:Property ;
     rdfs:label   "failed at"@en ;
-    rdfs:comment "The ordinal of the station the walk broke off at. Absent on a complete walk."@en ;
+    rdfs:comment """The ordinal of the station the walk broke off at. Absent on
+a complete walk."""@en ;
     rdfs:range   xsd:integer .
 
 garden:retrievability a rdf:Property ;
@@ -425,17 +516,22 @@ garden:prunedCount a rdf:Property ;
 
 garden:ascendingVia a rdf:Property ;
     rdfs:label   "ascending via"@en ;
-    rdfs:comment "A predicate that points from a concept towards a broader one, to be followed forwards when climbing."@en ;
+    rdfs:comment """A predicate that points from a concept towards a broader
+one, to be followed forwards when climbing."""@en ;
     rdfs:range   rdf:Property .
 
 garden:descendingVia a rdf:Property ;
     rdfs:label   "descending via"@en ;
-    rdfs:comment "A predicate that points from a concept towards a narrower one, to be followed backwards when climbing."@en ;
+    rdfs:comment """A predicate that points from a concept towards a narrower
+one, to be followed backwards when climbing."""@en ;
     rdfs:range   rdf:Property .
 
 garden:conceptHierarchy
     rdfs:label   "Concept hierarchy"@en ;
-    rdfs:comment "The edge set over which one concept counts as an ancestor of another. The transitive closure of these edges is the hierarchy; garden:parent is a single-valued projection of it, which is why the concept graph is a DAG while the placement structure is a forest."@en ;
+    rdfs:comment """The edge set over which one concept counts as an ancestor
+of another. The transitive closure of these edges is the hierarchy;
+garden:parent is a single-valued projection of it, which is why the concept
+graph is a DAG while the placement structure is a forest."""@en ;
     garden:ascendingVia  skos:broader, skos:broaderTransitive ;
     garden:descendingVia skos:narrower, skos:narrowerTransitive .
 
@@ -449,11 +545,13 @@ garden:conceptHierarchy
 
 garden:enumerations a skos:ConceptScheme ;
     rdfs:label   "Aleph Garden enumerations"@en ;
-    rdfs:comment "The closed value sets of the contract: forms, layout strategies, ratings, displacement kinds and link-card directions."@en .
+    rdfs:comment """The closed value sets of the contract: forms, layout
+strategies, ratings, displacement kinds and link-card directions."""@en .
 
 garden:forms a skos:Collection ;
     rdfs:label "Form catalogue"@en ;
-    rdfs:comment "Deliberately minimal in phase 0. Every entry carries the binding to its rendering as a URL."@en ;
+    rdfs:comment """Deliberately minimal in phase 0. Every entry carries the
+binding to its rendering as a URL."""@en ;
     skos:member <https://w3id.org/aleph/ns/garden/form/book>,
                 <https://w3id.org/aleph/ns/garden/form/table>,
                 <https://w3id.org/aleph/ns/garden/form/drawer>,
@@ -498,7 +596,9 @@ garden:layoutStrategies a skos:Collection ;
 
 <https://w3id.org/aleph/ns/garden/layout/gosper> a skos:Concept, garden:LayoutStrategy ;
     skos:inScheme garden:enumerations ; schema:name "Gosper curve"@en ;
-    rdfs:comment "A plane-filling curve. Adjacency along the curve is adjacency in the plane, so it supplies the world's canonical ordering and preserves locality for free."@en ;
+    rdfs:comment """A plane-filling curve. Adjacency along the curve is
+adjacency in the plane, so it supplies the world's canonical ordering and
+preserves locality for free."""@en ;
     garden:implementation <https://aph.gdn/layouts/gosper.js> ;
     garden:dimensions    2 ;
     garden:appendStable  true ;
@@ -506,7 +606,8 @@ garden:layoutStrategies a skos:Collection ;
 
 <https://w3id.org/aleph/ns/garden/layout/grid> a skos:Concept, garden:LayoutStrategy ;
     skos:inScheme garden:enumerations ; schema:name "Grid"@en ;
-    rdfs:comment "Fixed column count, so index i keeps its cell however many siblings arrive."@en ;
+    rdfs:comment """Fixed column count, so index i keeps its cell however many
+siblings arrive."""@en ;
     garden:implementation <https://aph.gdn/layouts/grid.js> ;
     garden:dimensions    2 ;
     garden:appendStable  true ;
@@ -514,7 +615,9 @@ garden:layoutStrategies a skos:Collection ;
 
 <https://w3id.org/aleph/ns/garden/layout/square> a skos:Concept, garden:LayoutStrategy ;
     skos:inScheme garden:enumerations ; schema:name "Square grid"@en ;
-    rdfs:comment "Rewraps to stay square, so the column count follows the total count. Admissible, but moving a place onto it relocates every child at once and is priced accordingly."@en ;
+    rdfs:comment """Rewraps to stay square, so the column count follows the
+total count. Admissible, but moving a place onto it relocates every child at
+once and is priced accordingly."""@en ;
     garden:implementation <https://aph.gdn/layouts/square.js> ;
     garden:dimensions    2 ;
     garden:appendStable  false ;
@@ -522,7 +625,8 @@ garden:layoutStrategies a skos:Collection ;
 
 garden:ratings a skos:Collection ;
     rdfs:label "Ratings"@en ;
-    rdfs:comment "Carried numerically as skos:notation, because the scheduler computes with the number."@en ;
+    rdfs:comment """Carried numerically as skos:notation, because the scheduler
+computes with the number."""@en ;
     skos:member garden:again, garden:hard, garden:good, garden:easy .
 
 garden:again a skos:Concept ; skos:inScheme garden:enumerations ;
@@ -536,7 +640,9 @@ garden:easy  a skos:Concept ; skos:inScheme garden:enumerations ;
 
 garden:displacementKinds a skos:Collection ;
     rdfs:label "Displacement kinds"@en ;
-    rdfs:comment "Moving, re-skinning, re-laying-out and promoting are one operation with four faces. The question is always whether memory has accrued, and if so what the change costs."@en ;
+    rdfs:comment """Moving, re-skinning, re-laying-out and promoting are one
+operation with four faces. The question is always whether memory has accrued,
+and if so what the change costs."""@en ;
     skos:member garden:Move, garden:Reskin, garden:Relayout, garden:Promotion .
 
 garden:Move a skos:Concept ; skos:inScheme garden:enumerations ;
@@ -550,7 +656,8 @@ garden:Relayout a skos:Concept ; skos:inScheme garden:enumerations ;
     rdfs:comment "The parent's layout changed such that this child's position moved."@en .
 garden:Promotion a skos:Concept ; skos:inScheme garden:enumerations ;
     schema:name "Promotion"@en ;
-    rdfs:comment "The place was pulled onto a route and given the distinctness it was never allotted."@en .
+    rdfs:comment """The place was pulled onto a route and given the
+distinctness it was never allotted."""@en .
 
 garden:directions a skos:Collection ;
     rdfs:label "Link card directions"@en ;

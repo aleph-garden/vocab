@@ -23,7 +23,8 @@
 
 <https://w3id.org/aleph/ns/lens#>
     rdfs:label   "Aleph Garden lens vocabulary"@en ;
-    rdfs:comment "Terms for binding a topology to the predicates that carry it and to the component that draws it."@en ;
+    rdfs:comment """Terms for binding a topology to the predicates that carry
+it and to the component that draws it."""@en ;
     dcterms:creator <https://toph.so/profile#me> ;
     dcterms:license <http://creativecommons.org/licenses/by/4.0/> .
 
@@ -34,12 +35,18 @@
 lens:SemanticLens a rdfs:Class ;
     rdfs:subClassOf schema:Intangible ;
     rdfs:label   "Semantic lens"@en ;
-    rdfs:comment "Binds a topology to the predicates that stand in for its edges and to the renderer that draws it. Lenses are open: many may exist over one topology, and the same subgraph may be offered through several at once, which is why choosing between them is a separate act from applying one."@en .
+    rdfs:comment """Binds a topology to the predicates that stand in for its
+edges and to the renderer that draws it. Lenses are open: many may exist over
+one topology, and the same subgraph may be offered through several at once,
+which is why choosing between them is a separate act from applying one."""@en .
 
 lens:Renderer a rdfs:Class ;
     rdfs:subClassOf schema:Intangible ;
     rdfs:label   "Renderer"@en ;
-    rdfs:comment "A component that draws a subgraph according to a lens, identified by IRI and implemented at a URL. Delivered as an ES module defining a custom element; the framework inside the element is the author's concern and no part of this contract."@en .
+    rdfs:comment """A component that draws a subgraph according to a lens,
+identified by IRI and implemented at a URL. Delivered as an ES module defining
+a custom element; the framework inside the element is the author's concern and
+no part of this contract."""@en .
 
 #################################################################
 # Properties
@@ -52,12 +59,17 @@ lens:renderer a rdf:Property ;
 
 lens:matchesShape a rdf:Property ;
     rdfs:label   "matches shape"@en ;
-    rdfs:comment "The topology this lens applies to — forest, DAG, bipartite, hub-and-spoke. A topology is a claim about the arrangement of a subgraph, not about the fields of one resource."@en .
+    rdfs:comment """The topology this lens applies to — forest, DAG, bipartite,
+hub-and-spoke. A topology is a claim about the arrangement of a subgraph, not
+about the fields of one resource."""@en .
 
 lens:edgePredicates a rdf:Property ;
     rdfs:label   "edge predicates"@en ;
-    rdfs:comment "The predicates read as edges when this lens is applied. Required ones: a subgraph missing any of them is not a match, so the lens does not claim a structure the data does not carry."@en .
+    rdfs:comment """The predicates read as edges when this lens is applied.
+Required ones: a subgraph missing any of them is not a match, so the lens does
+not claim a structure the data does not carry."""@en .
 
 lens:optionalEdgePredicates a rdf:Property ;
     rdfs:label   "optional edge predicates"@en ;
-    rdfs:comment "Predicates read as edges when present. Their absence weakens the drawing but does not disqualify the match."@en .
+    rdfs:comment """Predicates read as edges when present. Their absence
+weakens the drawing but does not disqualify the match."""@en .

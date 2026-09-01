@@ -32,7 +32,8 @@
 
 <https://w3id.org/aleph/ns/food#>
     rdfs:label   "Aleph Garden food vocabulary"@en ;
-    rdfs:comment "Terms for stating how much of a substance a recipe requires, a cupboard holds, or a shopping list wants."@en ;
+    rdfs:comment """Terms for stating how much of a substance a recipe
+requires, a cupboard holds, or a shopping list wants."""@en ;
     dcterms:creator <https://toph.so/profile#me> ;
     dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
     rdfs:seeAlso <https://w3id.org/aleph/ns/food/shapes> .
@@ -44,27 +45,39 @@
 food:IngredientRequirement a rdfs:Class ;
     rdfs:subClassOf schema:Intangible ;
     rdfs:label   "Ingredient requirement"@en ;
-    rdfs:comment "One substance together with one amount, at one place: a line of a recipe, a lot in a cupboard, a wish on a list. The amount belongs to the line and is not addressed on its own."@en .
+    rdfs:comment """One substance together with one amount, at one place: a
+line of a recipe, a lot in a cupboard, a wish on a list. The amount belongs to
+the line and is not addressed on its own."""@en .
 
 food:MeasuredQuantity a rdfs:Class ;
     rdfs:subClassOf schema:QuantitativeValue ;
     rdfs:label   "Measured quantity"@en ;
-    rdfs:comment "An amount with a unit that carries a dimension — 200 ml, 500 g. The only shape in which amounts may be converted or added, and then only between units sharing a quantity kind."@en .
+    rdfs:comment """An amount with a unit that carries a dimension — 200 ml,
+500 g. The only shape in which amounts may be converted or added, and then only
+between units sharing a quantity kind."""@en .
 
 food:CountedQuantity a rdfs:Class ;
     rdfs:subClassOf schema:QuantitativeValue ;
     rdfs:label   "Counted quantity"@en ;
-    rdfs:comment "A number of pieces — three eggs, one onion. Kept apart from a measured amount although a count is expressible as a unit, so that the missing dimension is visible: without a weight per piece there is no route to grams."@en .
+    rdfs:comment """A number of pieces — three eggs, one onion. Kept apart from
+a measured amount although a count is expressible as a unit, so that the
+missing dimension is visible: without a weight per piece there is no route to
+grams."""@en .
 
 food:HandQuantity a rdfs:Class ;
     rdfs:subClassOf schema:QuantitativeValue ;
     rdfs:label   "Hand quantity"@en ;
-    rdfs:comment "A pinch, a stalk, a bunch. Not units but hand measures and produce-specific portions, named in words rather than coded, because coding them would claim a convertibility that does not exist."@en .
+    rdfs:comment """A pinch, a stalk, a bunch. Not units but hand measures and
+produce-specific portions, named in words rather than coded, because coding
+them would claim a convertibility that does not exist."""@en .
 
 food:UnspecifiedQuantity a rdfs:Class ;
     rdfs:subClassOf schema:QuantitativeValue ;
     rdfs:label   "Unspecified quantity"@en ;
-    rdfs:comment "An amount deliberately left open — butter, some. A state in its own right and not a missing value: the line exists, the amount was never fixed, and that must stay distinguishable from having said nothing at all."@en .
+    rdfs:comment """An amount deliberately left open — butter, some. A state in
+its own right and not a missing value: the line exists, the amount was never
+fixed, and that must stay distinguishable from having said nothing at all.
+"""@en .
 
 #################################################################
 # Properties
@@ -72,11 +85,16 @@ food:UnspecifiedQuantity a rdfs:Class ;
 
 food:substance a rdf:Property ;
     rdfs:label   "substance"@en ;
-    rdfs:comment "What a recipe asks for and a cupboard holds — cream, not a particular carton of it. Always a reference, never text: a string here would look like an answer while carrying nothing any other application could read."@en .
+    rdfs:comment """What a recipe asks for and a cupboard holds — cream, not a
+particular carton of it. Always a reference, never text: a string here would
+look like an answer while carrying nothing any other application could read.
+"""@en .
 
 food:quantity a rdf:Property ;
     rdfs:label   "quantity"@en ;
-    rdfs:comment "How much, in one of the four shapes. Leaving it out is an error rather than a way of saying the amount is open; that is what an unspecified quantity is for."@en .
+    rdfs:comment """How much, in one of the four shapes. Leaving it out is an
+error rather than a way of saying the amount is open; that is what an
+unspecified quantity is for."""@en .
 
 #################################################################
 # Handmaße und offene Mengen als Begriffe
@@ -90,12 +108,16 @@ food:quantity a rdf:Property ;
 food:HandMeasure a rdfs:Class ;
     rdfs:subClassOf skos:Concept ;
     rdfs:label   "Hand measure"@en ;
-    rdfs:comment "A portion named in words — a pinch, a stalk, a bunch. Countable, which is what separates it from an open amount: a number fits in front of it."@en .
+    rdfs:comment """A portion named in words — a pinch, a stalk, a bunch.
+Countable, which is what separates it from an open amount: a number fits in
+front of it."""@en .
 
 food:OpenAmount a rdfs:Class ;
     rdfs:subClassOf skos:Concept ;
     rdfs:label   "Open amount"@en ;
-    rdfs:comment "A recognised way of leaving the amount to the cook — to taste, as needed. No number fits in front of it, which is why it carries no forms per count."@en .
+    rdfs:comment """A recognised way of leaving the amount to the cook — to
+taste, as needed. No number fits in front of it, which is why it carries no
+forms per count."""@en .
 
 food:handMeasures a skos:ConceptScheme ;
     rdfs:label "Hand measures"@en .
@@ -105,18 +127,26 @@ food:openAmounts a skos:ConceptScheme ;
 
 food:handMeasure a rdf:Property ;
     rdfs:label   "hand measure"@en ;
-    rdfs:comment "The measure a hand quantity is counted in. A reference rather than a word, so the word can follow both the language and the number."@en ;
+    rdfs:comment """The measure a hand quantity is counted in. A reference
+rather than a word, so the word can follow both the language and the number.
+"""@en ;
     rdfs:range   food:HandMeasure .
 
 food:openAmount a rdf:Property ;
     rdfs:label   "open amount"@en ;
-    rdfs:comment "How an unspecified quantity is left open. Says which recognised way it is, where the note beside it says why."@en ;
+    rdfs:comment """How an unspecified quantity is left open. Says which
+recognised way it is, where the note beside it says why."""@en ;
     rdfs:range   food:OpenAmount .
 
 food:countForm a rdf:Property ;
     rdfs:label   "count form"@en ;
-    rdfs:comment "One written form of a measure, tied to the plural category it is chosen for. At least one; which one applies is decided when the amount is shown, never when it is written."@en .
+    rdfs:comment """One written form of a measure, tied to the plural category
+it is chosen for. At least one; which one applies is decided when the amount is
+shown, never when it is written."""@en .
 
 food:pluralCategory a rdf:Property ;
     rdfs:label   "plural category"@en ;
-    rdfs:comment "A CLDR plural category — zero, one, two, few, many, other. Not a grammatical number: Polish \"few\" covers 2 to 4 and 22 to 24, which is a selection rule rather than a number, so lexinfo's singular and plural do not fit."@en .
+    rdfs:comment """A CLDR plural category — zero, one, two, few, many, other.
+Not a grammatical number: Polish \"few\" covers 2 to 4 and 22 to 24, which is a
+selection rule rather than a number, so lexinfo's singular and plural do not
+fit."""@en .

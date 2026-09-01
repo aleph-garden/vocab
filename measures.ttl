@@ -30,7 +30,8 @@
 
 <https://w3id.org/aleph/ns/measures#>
     rdfs:label   "Aleph Garden measure terms"@en ;
-    rdfs:comment "Hand measures and recognised ways of leaving an amount open, as SKOS concepts carrying their written forms."@en ;
+    rdfs:comment """Hand measures and recognised ways of leaving an amount
+open, as SKOS concepts carrying their written forms."""@en ;
     dcterms:creator <https://toph.so/profile#me> ;
     dcterms:license <http://creativecommons.org/licenses/by/4.0/> ;
     rdfs:seeAlso <https://w3id.org/aleph/ns/food#> .
@@ -45,7 +46,8 @@ measures:handMeasures a skos:ConceptScheme ;
 
 measures:openAmounts a skos:ConceptScheme ;
     skos:prefLabel "Offene Mengen"@de, "Open amounts"@en ;
-    rdfs:comment "Recognised ways of leaving the amount to the cook. No number fits in front of one."@en .
+    rdfs:comment """Recognised ways of leaving the amount to the cook. No
+number fits in front of one."""@en .
 
 #################################################################
 # Hand measures — small amounts by hand
